@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
+    <link href="https://fonts.cdnfonts.com/css/impact" rel="stylesheet" type="text/css"> <!-- Impact Font -->
+    <link href="https://fonts.cdnfonts.com/css/jenkine" rel="stylesheet">                <!-- Jenkine Font (brushed )-->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">      <!-- leaflet -->
+    <link rel="stylesheet" href="./styles.css">
+    <link rel="icon" type="image/x-icon" href="./icons/favicon.ico">
+    <title>Geländewagenclub Schweiz - GWC</title>
+  </head>
+  <body>
+    <!--######## NAVIGATION ########-->
+    <nav>
+      <div class="logo">
+        <img src="./icons/logo_bright.png" alt="logo">
+      </div>
+      <div id="menu-links">
+        <a href="#about">Über uns</a>
+        <a href="#termine">Termine</a>
+        <a href="#reglement">Reglement</a>
+        <a href="#rangliste">Rangliste</a>
+        <a href="https://eurotrial.eu">Eurotrial</a>
+      </div>
+      <img id="menu-button" src="./icons/hamburger.svg" alt="Menu icon" onclick="document.getElementById('menu-button').classList.toggle('enabled'); document.getElementById('menu-links').classList.toggle('enabled');">
+    </nav>
+    <!--######## TITLE ########-->
+    <div id="title-container" >
+      <div id="title-text-container">
+        <h1>Geländewagenclub</h1>
+        <h1>Schweiz</h1>
+      </div>
+      <img id="title-image" src="./images/title/base.jpg" alt="Titelbild mit einem Proto welcher über ein Hinderniss fährt">
+      <img id="title-image-overlay" class="overlay" src="./images/title/overlay.png" alt="Überlagerung des Titelbildes">
+    </div>
+    <section id="about">
+      <h1 class="section-title">Über uns</h1>
+      <div class="section-content">
+        <p>Mitte 1982 hatten drei Leute die Idee einen Geländewagen Club zu gründen. Im November des selben Jahres wurde der GWC (Geländewagenclub Schweiz) in Niederweningen ZH gegründet. Anwesend waren ca. 25 Geländewagenfahrer die ihrem Hobby frönen wollten. Er versteht sich als Markenunabhängiger Club. Es wurden gemeinsam diverse Trails in Deutschland und in der Schweiz besucht. Bald organisierte der GWC Trials des Schweizerischen Trialcup. Der Schweizerische Trialcup war der Vorläufer des heutigen Dachverbandes FSG. Die FSG wurde später von einigen Clubs. GWC etc., der Geländewagen Szene ins leben gerufen. Der Club hat einen Bestand von 112 Mitgliedern, davon 68 Aktive (Stand GV 2021).</p>
+        <p><b>Ziel und Zweck unseres Sportes</b></p>
+        <ul>
+          <li>Förderung einer positiven Grundeinstellung zum Geländefahrzeug.</li>
+          <li>Organisieren von Projekten im Zusammenhang mit Geländefahrzeugen.</li>
+          <li>Theoretische und praktische Förderung der Fahrtüchtigkeit der Mitglieder, durchführen von entsprechenden Veranstaltungen. Diese Veranstaltungen (Trials) sind keine Rennen auf Zeit, sondern reine Geschicklichkeitswettbewerbe, welche Ausschließlich in Kiesgruben ausgetragen werden. </li>
+          <li>Die Fahrzeuge werden in verschiedene Klassen eingeteilt, so entstehen für unterschiedliche Fahrzeuge keine Vor- oder Nachteile.</li>
+        </ul>
+        <div class="sideway-scrollable-container">
+          <div class="hint">Vorstand →</div>
+          <!-- Board filled by javascript -->
+        </div>
+        <div class="bylaws-specification-container">
+          <a class="button-like" href="/documents/gwc_statuten.pdf" target="_blank">Statuten</a>
+          <a class="button-like" href="/documents/gwc_pflichtenheft.pdf" target="_blank">Pflichtenheft</a>
+        </div>
+      </div>
+    </section>
+  </body>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script> <!-- Leaflet -->
+  <script src="./functions.js"></script>
+    <script>
+      FollowScrollInverse([document.getElementById("title-text-container")]);
+      FlyInFromBottom([...document.getElementsByClassName("section-title")]);
+      FlyInFromBottom([...document.getElementsByClassName("sideway-scrollable-container")]);
+  
+      // Title image follow mouse (if applicable)
+      if(window.screen.width > 1000) {
+          FollowMouse([document.getElementById("title-image"), document.getElementById("title-image-overlay")]);
+      }
+      CreateBoard(document.getElementById("about").getElementsByClassName("sideway-scrollable-container")[0], "/data/board.csv");
+      // CreateRankings(document.getElementById("rangliste").getElementsByClassName("section-content")[0], "/documents/rankings/list_rankings.php");
+      // CreateDates(document.getElementById("termine").getElementsByClassName("section-content")[0], "/dates.csv")
+    </script>
+</html>
