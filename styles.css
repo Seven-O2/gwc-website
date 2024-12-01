@@ -51,6 +51,11 @@ p {
     text-align: justify;
 }
 
+a {
+    color:         gray;
+    text-decoration: none;
+}
+
 footer {
     height:           10vh;
     padding:          var(--default-spacing);
@@ -199,7 +204,9 @@ section > .section-content > .sideway-scrollable-container {
     padding: 0;
 }
 
-.card:has(img.full) > p {
+.card:has(img.full) > p,
+.card:has(img.full) > h2,
+.card:has(img.full) > h4 {
     margin-left: 1rem;
     margin-right: 1rem;
     margin-bottom: 1rem;
@@ -471,6 +478,7 @@ nav > :last-child  { margin-right: var(--default-spacing); }
     margin-top:      auto;
     margin-bottom:   auto;
     color:           var(--primary-color);
+    font-size:       1.5vw;
     text-decoration: none;
     transition:      0.3s;
 }
@@ -508,6 +516,7 @@ nav > :last-child  { margin-right: var(--default-spacing); }
     }
 
     #menu-links > a {
+        font-size:     1rem;
         margin-top:    1rem;
         margin-bottom: 1rem;
         text-align:    right;
@@ -552,7 +561,7 @@ nav > :last-child  { margin-right: var(--default-spacing); }
 
 #title-text-container {
     position:        absolute;
-    height:          97vh;
+    height:          90vh;
     padding-left:    var(--default-spacing);
     z-index:         1;
     display:         flex;
@@ -601,6 +610,12 @@ nav > :last-child  { margin-right: var(--default-spacing); }
         padding-left:  0;
         padding-right: 0;
     }
+}
+
+/**************************** Regulations ****************************/
+.regulations-container {
+    display: flex;
+    justify-content: center;
 }
 
 /**************************** Animations ****************************/

@@ -8,23 +8,24 @@
     <link href="https://fonts.cdnfonts.com/css/jenkine" rel="stylesheet">                <!-- Jenkine Font (brushed )-->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">      <!-- leaflet -->
     <link rel="stylesheet" href="./styles.css">
-    <link rel="icon" type="image/x-icon" href="./icons/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="./images/icons/favicon.ico">
     <title>Geländewagenclub Schweiz - GWC</title>
   </head>
   <body>
     <!--######## NAVIGATION ########-->
     <nav>
       <div class="logo">
-        <img src="./icons/logo_bright.png" alt="logo">
+        <img src="./images/icons/logo_bright.png" alt="logo">
       </div>
       <div id="menu-links">
         <a href="#about">Über uns</a>
         <a href="#termine">Termine</a>
         <a href="#reglement">Reglement</a>
-        <a href="#rangliste">Rangliste</a>
-        <a href="https://eurotrial.eu">Eurotrial</a>
+        <a href="#impressionen">Impressionen</a>
+        <a href="#shop">Shop</a>
+        <a href="#ranglisten">Ranglisten</a>
       </div>
-      <img id="menu-button" src="./icons/hamburger.svg" alt="Menu icon" onclick="document.getElementById('menu-button').classList.toggle('enabled'); document.getElementById('menu-links').classList.toggle('enabled');">
+      <img id="menu-button" src="./images/icons/hamburger.svg" alt="Menu icon" onclick="document.getElementById('menu-button').classList.toggle('enabled'); document.getElementById('menu-links').classList.toggle('enabled');">
     </nav>
     <!--######## TITLE ########-->
     <div id="title-container" >
@@ -35,15 +36,16 @@
       <img id="title-image" src="./images/title/base.jpg" alt="Titelbild mit einem Proto welcher über ein Hinderniss fährt">
       <img id="title-image-overlay" class="overlay" src="./images/title/overlay.png" alt="Überlagerung des Titelbildes">
     </div>
+    <!--######## Über Uns ########-->
     <section id="about">
       <h1 class="section-title">Über uns</h1>
       <div class="section-content">
-        <p>Mitte 1982 hatten drei Leute die Idee einen Geländewagen Club zu gründen. Im November des selben Jahres wurde der GWC (Geländewagenclub Schweiz) in Niederweningen ZH gegründet. Anwesend waren ca. 25 Geländewagenfahrer die ihrem Hobby frönen wollten. Er versteht sich als Markenunabhängiger Club. Es wurden gemeinsam diverse Trails in Deutschland und in der Schweiz besucht. Bald organisierte der GWC Trials des Schweizerischen Trialcup. Der Schweizerische Trialcup war der Vorläufer des heutigen Dachverbandes FSG. Die FSG wurde später von einigen Clubs. GWC etc., der Geländewagen Szene ins leben gerufen. Der Club hat einen Bestand von 112 Mitgliedern, davon 68 Aktive (Stand GV 2021).</p>
+        <p>Mitte 1982 hatten drei Leute die Idee einen Geländewagen Club zu gründen. Im November des selben Jahres wurde der GWC (Geländewagenclub Schweiz) in Niederweningen ZH gegründet. Anwesend waren ca. 25 Geländewagenfahrer die ihrem Hobby frönen wollten. Er versteht sich als Markenunabhängiger Club. Es wurden gemeinsam diverse Trials in Deutschland und in der Schweiz besucht. Bald organisierte der GWC Trials des Schweizerischen Trialcup. Der Schweizerische Trialcup war der Vorläufer des heutigen Dachverbandes FSG. Der Club hat einen Bestand von 112 Mitgliedern, davon 68 Aktive (Stand GV 2021).</p>
         <p><b>Ziel und Zweck unseres Sportes</b></p>
         <ul>
           <li>Förderung einer positiven Grundeinstellung zum Geländefahrzeug.</li>
           <li>Organisieren von Projekten im Zusammenhang mit Geländefahrzeugen.</li>
-          <li>Theoretische und praktische Förderung der Fahrtüchtigkeit der Mitglieder, durchführen von entsprechenden Veranstaltungen. Diese Veranstaltungen (Trials) sind keine Rennen auf Zeit, sondern reine Geschicklichkeitswettbewerbe, welche Ausschließlich in Kiesgruben ausgetragen werden. </li>
+          <li>Theoretische und praktische Förderung der Fahrtüchtigkeit der Mitglieder, durchführen von entsprechenden Veranstaltungen. Diese Veranstaltungen (Trials) sind keine Rennen auf Zeit, sondern reine Geschicklichkeitswettbewerbe, welche ausschliesslich in Kiesgruben ausgetragen werden.</li>
           <li>Die Fahrzeuge werden in verschiedene Klassen eingeteilt, so entstehen für unterschiedliche Fahrzeuge keine Vor- oder Nachteile.</li>
         </ul>
         <div class="sideway-scrollable-container">
@@ -56,6 +58,86 @@
         </div>
       </div>
     </section>
+    <!--######## DATES ########-->
+    <section id="termine">
+      <h1 class="section-title">Termine</h1>
+      <div class="section-content">
+        <p>Der GWC organisiert ca. 4 Clubläufe pro Jahr. Diese folgen meistens auf Schweizermeisterschafts-Läufe der FSG.</p>
+        <!-- Dates filled by JS and dates.csv -->
+      </div>
+    </section>
+    <!--######## RULES ########-->
+    <section id="reglement">
+      <h1 class="section-title">Reglement</h1>
+      <div class="section-content">
+        <p>Neben den fünf offiziellen Klassen Original, Standard, Modified, Promodified und Prototype können in der Schweiz Fahrzeuge unter der Klasse Fun-Cup und Offen fahren. Damit ein Fahrzeug in einer Klasse starten kann, muss es dem Regelment entsprechen. Ob ein Fahrzeug dem Reglement entspricht wird beim Starten des ersten Laufes überprüft. GWC-Läufe werden nach dem FSG-Regelement durchgeführt. Siehe die <a href="https://4x4fsg.ch/">offizielle Website der FSG</a>.</p>
+        <div class="regulations-container">
+          <a class="button-like" href="./documents/fsg_reglement.pdf" target="_blank">Reglement (FSG)</a>
+        </div>
+        <div class="sideway-scrollable-container">
+          <div class="hint">Weitere Klassen →</div>
+          <div class="card green">
+            <img src="./images/classes/funcup.jpg" class="full" alt="Bild eines Fun-Cup Fahrzeugs">
+            <h3>Fun-Cup</h3>
+            <p>In der Klasse Fun-Cup treten die Fahrer mit auf der Strasse zugelassenen Fahrzeugen gegeneinander an. Alle Änderungen müssen legal sein und eingetragen sein, das Fahrzeug muss eingelöst sein.</p>
+          </div>
+          <div class="card blue">
+            <img src="./images/classes/original.jpg" class="full" alt="Bild eines original Fahrzeugs">
+            <h3>Original</h3>
+            <p>Die Klasse Original beinhaltet alle Fahrzeuge welche nur kleine Modifikationen haben. Die Fahrzeuge benötigen, anders wie Fun-Cup keine, Strassenzulassung mehr. Nebenbei muss das Fahrzeug mit mehr Sicherheit wie Überrollkäfig und Not-Aus ausgestattet werden. Die zu befahrenden Tore sind schwieriger.</p>
+          </div>
+          <div class="card white">
+            <img src="./images/classes/standard.jpg" class="full" alt="Bild eines standard Fahrzeugs">
+            <h3>Standard</h3>
+            <p>Standard-Fahrzeuge sind verbesserte Strassenfahrzeuge. In dieser Klasse ist das Verstärken und Verbessern der grundlegenden Teilen wie Achsen und Motor erlaubt, wobei die ursprünglichen Funktionsweisen beibehalten wird, wie zum Beispiel der Federtyp oder die Anzahl Zylinder des Motors.</p>
+          </div>
+          <div class="card yellow">
+            <img src="./images/classes/modified.jpg" class="full" alt="Bild eines modified Fahrzeugs">
+            <h3>Modified</h3>
+            <p>In der Klasse Modified fahren Fahrzeuge in welchem das Chassis und die Karosserie noch einem Serienfahrzeug entsprechen, aber die Fahrwerke und viele weitere Teile des Fahrzeuges grundlegend verändert werden können. Es dürfen mehr Teile der Karosserie entfernt werden, was zu Vorteilen in engen Situationen führt.</p>
+          </div>
+          <div class="card black">
+            <img src="./images/classes/promodified.jpg" class="full" alt="Bild eine promodified Fahrzeugs">
+            <h3>Promodified</h3>
+            <p>Die Klasse Promodified enthält Fahrzeuge welche äusserlich einem Offroad-Fahrzeug entsprechen. Die Fahrzeuge bestehen in der Regel jedoch aus Rohrrahmen, wobei in dieser Klasse Einzelradbremsen erlaubt sind.</p>
+          </div>
+          <div class="card red">
+            <img src="./images/classes/prototype.jpg" class="full" alt="Bild eines prototype Fahrzeugs">
+            <h3>Prototype</h3>
+            <p>Prototype sind, wie der Name vermuten lässt, Offroad-Prototypen. Die Fahrzeuge müssen in dieser Klasse keinem konventionellem Offroad-Fahrzeug mehr ähneln. Mithilfe Vierradlenkung ist das Ziel dieser Klasse auch die schwersten Tore zu befahren und die ultimativen Offroadfahrzeuge ans Limit zu bringen.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!--######## Impressionen ########-->
+    <section id="impressionen">
+      <h1 class="section-title">Impressionen</h1>
+      <div class="section-content">
+        <p>In diesem Teil findest Du einige Momentaufnahmen von diversen Läufen.</p>
+        <!-- Impressions filled by JS and rankings folder -->
+      </div>
+    </section>
+    <!--######## Shop ########-->
+    <section id="shop">
+      <h1 class="section-title">Shop</h1>
+      <div class="section-content">
+        <p>Willst Du stylisch aussehen und dabei den GWC unterstützen? Dann sende uns Deine Bestellung an president@gwc-schweiz.ch.</p>
+        <div class="sideway-scrollable-container">
+          <div class="hint">Weitere Artikel →</div>
+          <!-- Shop content filled by JS and rankings folder -->
+        </div>
+        <p>Gib uns Deinen Namen, Adresse und die gwünschten Artikel an damit deine Bestellung schnellstmöglich bei Dir eintrifft, oder hole sie bei uns an einem Lauf ab.</p>
+      </div>
+    </section>
+    <!--######## Rankings ########-->
+    <section id="ranglisten">
+      <h1 class="section-title">Ranglisten</h1>
+      <div class="section-content">
+        <p>In diesem Teil findest Du die Ranglisten der GWC-Läufe. Die Ranglisten der FSG-Läufe findest du auf der Website der <a href="https://4x4fsg.ch/rangliste">FSG</a>.</p>
+        <!-- Rankings filled by JS and rankings folder -->
+      </div>
+    </section>
+    
   </body>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script> <!-- Leaflet -->
   <script src="./functions.js"></script>
@@ -69,7 +151,8 @@
           FollowMouse([document.getElementById("title-image"), document.getElementById("title-image-overlay")]);
       }
       CreateBoard(document.getElementById("about").getElementsByClassName("sideway-scrollable-container")[0], "/data/board.csv");
-      // CreateRankings(document.getElementById("rangliste").getElementsByClassName("section-content")[0], "/documents/rankings/list_rankings.php");
-      // CreateDates(document.getElementById("termine").getElementsByClassName("section-content")[0], "/dates.csv")
+      CreateDates(document.getElementById("termine").getElementsByClassName("section-content")[0], "/data/dates.csv")
+      CreateShop(document.getElementById("shop").getElementsByClassName("sideway-scrollable-container")[0], "/data/shop.csv");
+      //CreateRankings(document.getElementById("rangliste").getElementsByClassName("section-content")[0], "/documents/rankings/list_rankings.php");
     </script>
 </html>
