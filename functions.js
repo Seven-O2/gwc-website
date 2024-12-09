@@ -48,21 +48,25 @@ const FlyInFromBottom = (elements) => {
     }, false);
 }
 
-const FetchCSV = (file) => {
-    return fetch(file)
-    .then(response => {
-        if(response.status !== 200) {
-            throw new Error("Couldn't load data")
-        }
-        return response;
-    })
-    .then(response => response.text())
-    .then((data) => data
-        .split(/\r\n|\n/)
-        .splice(1)
-        .filter(e => e !== "")
-        .map(e => e.split(";"))
-    );
+// Fetches a CSV file and returns a promise that, when fulfilled, contains the dismanteld csv file
+// In the end a 2 dimensional array is returned. The first dimension contains the row, the second
+// the csv entries.
+// VAL1;VAL2;VAL3
+// 1111;1112;1113
+// 2221;2222;2223
+// csv[0][2] returns 1113
+const FetchCSV = async (file) => {
+    const response = await fetch(file);
+    if (response.status !== 200) {
+        throw new Error("Couldn't load data");
+    }
+    const response_1 = response;
+    const data = await response_1.text();
+    return data
+        .split(/\r\n|\n/)               // Split newlines
+        .splice(1)                      // Remove header
+        .filter(e => e !== "")          // Remove null lines
+        .map(e_1 => e_1.split(";"));    // Split values at semicolons
 }
 
 // Creates an icon with text for the passed icon and text
@@ -78,6 +82,7 @@ const getIconWithText = (iconSrc, iconAlt, text) => {
     return container;
 }
 
+// Creates the board
 const CreateBoard = (parent, file) => {
     FetchCSV(file).then(data => {
         data.forEach(ev => {
@@ -181,7 +186,7 @@ const CreateDates = (parent, file) => {
             if(ev[7] === "true") {
                 const logo = document.createElement("img");
                 logo.classList.add("event-logo");
-                logo.src = "/images/eurotrial.png";
+                logo.src = "/images/icons/eurotrial.png";
                 logo.alt = "Logo der Veranstaltung";
                 data.appendChild(logo);
             }
@@ -261,5 +266,37 @@ const CreateDates = (parent, file) => {
         const title = document.createElement("h2");
         title.innerHTML = "Daten konnten nicht geladen werden.";
         parent.appendChild(title);
+    });
+}
+
+// Creates the ranking using a server side script
+const CreateRankings = (parent, phpScript) => {
+    const months = [ "Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember" ];
+
+    fetch(phpScript)
+    .then(response => response.text())
+    .then((data) => {
+        const json = JSON.parse(data);
+        Object.keys(json).reverse().forEach(year => {
+            const title = document.createElement("h2");
+            title.innerHTML = year;
+            parent.appendChild(title);
+
+            const rankingContainer = document.createElement("div");
+            rankingContainer.classList.add("rankings-container");
+            parent.appendChild(rankingContainer);
+
+            json[year].reverse().forEach(ranking => {
+                let name = ranking.replace(".pdf", "");
+                if(name.includes("_")) {
+                    name = name.split("_")[2] + " " + name.split("_")[1] + ". " + months[name.split("_")[0] - 1];
+                }
+                const link = document.createElement("a");
+                link.href = "./documents/rankings/" + year + "/" + ranking;
+                link.classList.add("button-like");
+                link.innerHTML = name;
+                rankingContainer.appendChild(link);
+            });
+        });
     });
 }

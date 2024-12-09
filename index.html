@@ -133,11 +133,26 @@
     <section id="ranglisten">
       <h1 class="section-title">Ranglisten</h1>
       <div class="section-content">
-        <p>In diesem Teil findest Du die Ranglisten der GWC-Läufe. Die Ranglisten der FSG-Läufe findest du auf der Website der <a href="https://4x4fsg.ch/rangliste">FSG</a>.</p>
+        <p>In diesem Teil findest Du die Ranglisten der GWC-Läufe. Die Ranglisten der FSG-Läufe findest du auf der Website der <a href="https://4x4fsg.ch/rangliste">Föderation schweizerischer Geländewagenclubs</a>.</p>
         <!-- Rankings filled by JS and rankings folder -->
       </div>
     </section>
-    
+    <footer>
+      <div>
+        <div>
+          <p><a href="./impressum/">Impressum</a></p>
+          <p><a href="https://www.facebook.com/100063471430913">Facebook</a></p>
+          <p><a href="https://www.autoteilexxl.ch">Autoteile XXL</a></p>
+          <p><a href="https://www.euro4x4parts.com/en">euro4x4parts</a></p>
+          <p><a href="https://www.4x4fsg.ch">FSG</a></p>
+          <p><a href="https://www.pkwteile.ch">PKW Teile</a></p>
+        </div>
+        
+        <div class="horizontal-spacer"></div>
+        <a href="">Anmelden</a>
+      </div>
+      <p class="copyright">&copy GWC-Schweiz, alle Rechte vorbehalten</p>
+    </footer>
   </body>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script> <!-- Leaflet -->
   <script src="./functions.js"></script>
@@ -153,6 +168,6 @@
       CreateBoard(document.getElementById("about").getElementsByClassName("sideway-scrollable-container")[0], "/data/board.csv");
       CreateDates(document.getElementById("termine").getElementsByClassName("section-content")[0], "/data/dates.csv")
       CreateShop(document.getElementById("shop").getElementsByClassName("sideway-scrollable-container")[0], "/data/shop.csv");
-      //CreateRankings(document.getElementById("rangliste").getElementsByClassName("section-content")[0], "/documents/rankings/list_rankings.php");
+      CreateRankings(document.getElementById("ranglisten").getElementsByClassName("section-content")[0], "/documents/rankings/list_rankings.php");
     </script>
 </html>
