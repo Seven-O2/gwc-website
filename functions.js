@@ -172,7 +172,7 @@ const CreateDates = (parent, file) => {
             card.onmousedown = (e) => { mousePosition = {x: e.clientX, y: e.clientY}; }
             card.onmouseup = (e) => {
                 if(mousePosition && mousePosition.x === e.clientX && mousePosition.y === e.clientY) {
-                    window.open("https://maps.google.com/maps?hl=de&q=" + ev[2] + "," + ev[3], "_blank");
+                    window.open("https://maps.google.com/maps?hl=de&q=" + ev[3] + "," + ev[4], "_blank");
                 }
             }
             
