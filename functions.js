@@ -272,7 +272,6 @@ const CreateDates = (parent, file) => {
 // Creates the ranking using a server side script
 const CreateRankings = (parent, phpScript) => {
     const months = [ "Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember" ];
-
     fetch(phpScript)
     .then(response => response.text())
     .then((data) => {
@@ -299,4 +298,49 @@ const CreateRankings = (parent, phpScript) => {
             });
         });
     });
+}
+
+// Create impressions from returned php script (card with image and location, separated by year)
+const CreateImpressions = (parent, phpScript) => {
+    fetch(phpScript)
+    .then(response => response.text())
+    .then((data) => {
+        const json = JSON.parse(data);
+        Object.keys(json).reverse().forEach(year => {
+            // Spacer containing the year
+            const spacer = document.createElement("div");
+            spacer.classList.add("spacer");
+            parent.appendChild(spacer);
+
+            const spacerText = document.createElement("p");
+            spacerText.innerHTML = year;
+            spacer.appendChild(spacerText);
+            Object.keys(json[year]).reverse().forEach(event => {
+                const container = document.createElement("card");
+                container.classList.add("card");
+                container.classList.add("clickable");
+                parent.appendChild(container);
+
+                const image = document.createElement("img");
+                image.classList.add("full")
+                image.src = json[year][event];
+                console.log(image.src)
+                container.appendChild(image);
+
+                const place = document.createElement("h2")
+                place.innerHTML = event.split("_").slice(2).join(" ");
+                container.appendChild(place);
+            });
+        });
+    });
+}
+
+// Sets the "head image" of the overlay and set the smaller image as selected
+const setOverlayImage = (replacementImage) => {
+    const overlay = document.getElementById("impression-overlay");
+    Array.from(overlay.getElementsByClassName("sideway-scrollable-container")[0].children)
+         .forEach(c => c.classList.remove("selected"));
+    replacementImage.classList.add("selected")
+    overlay.children[0].src = replacementImage.src;
+    overlay.children[0].onclick = () => window.open(replacementImage.src, "_blank")
 }

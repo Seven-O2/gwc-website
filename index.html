@@ -114,6 +114,16 @@
       <h1 class="section-title">Impressionen</h1>
       <div class="section-content">
         <p>In diesem Teil findest Du einige Momentaufnahmen von diversen Läufen.</p>
+        <div class="sideway-scrollable-container">
+          <p class="hint">Mehr Impressionen →</p>
+          <!-- Filled by JS -->
+        </div>
+        <div id="impression-overlay">
+          <div class="sideway-scrollable-container">
+            <p class="hint">Mehr Bilder →</p>
+          </div>
+          <button onclick="document.getElementById('impression-overlay').style.display = 'none'">Schliessen</button>
+        </div>
         <!-- Impressions filled by JS and rankings folder -->
       </div>
     </section>
@@ -165,9 +175,11 @@
       if(window.screen.width > 1000) {
           FollowMouse([document.getElementById("title-image"), document.getElementById("title-image-overlay")]);
       }
-      CreateBoard(document.getElementById("about").getElementsByClassName("sideway-scrollable-container")[0], "/data/board.csv");
-      CreateDates(document.getElementById("termine").getElementsByClassName("section-content")[0], "/data/dates.csv")
-      CreateShop(document.getElementById("shop").getElementsByClassName("sideway-scrollable-container")[0], "/data/shop.csv");
-      CreateRankings(document.getElementById("ranglisten").getElementsByClassName("section-content")[0], "/documents/rankings/list_rankings.php");
+      CreateBoard(      document.getElementById("about")       .getElementsByClassName("sideway-scrollable-container")[0], "/data/board.csv");
+      CreateDates(      document.getElementById("termine")     .getElementsByClassName("section-content")[0],              "/data/dates.csv")
+      CreateImpressions(document.getElementById("impressionen").getElementsByClassName("sideway-scrollable-container")[0], "/impressions/list_impressions.php");
+      CreateShop(       document.getElementById("shop")        .getElementsByClassName("sideway-scrollable-container")[0], "/data/shop.csv");
+      CreateRankings(   document.getElementById("ranglisten")  .getElementsByClassName("section-content")[0],              "/documents/rankings/list_rankings.php");
+      
     </script>
 </html>
