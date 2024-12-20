@@ -325,7 +325,7 @@ const CreateImpressions = (parent) => {
                 container.classList.add("card");
                 container.classList.add("clickable");
                 container.onclick = () => {
-                    ShowImpressions(year, event, document.getElementById("image-viewer"));
+                    ShowImpressions(year, event);
                 };
                 parent.appendChild(container);
 
@@ -342,8 +342,36 @@ const CreateImpressions = (parent) => {
     });
 }
 
-const ShowImpressions = (year, folder, imageviewer) => {
+const MoveImageSelectionInImageViewer = (event) => {
+    const imgContainer = document.getElementById("image-viewer")
+                                 .getElementsByClassName("sideway-scrollable-container")[0];
+    
+    if(event.key === "ArrowLeft" || event.key === "ArrowRight") {
+        for(let i = 0; i < imgContainer.children.length; i++) {
+            if(imgContainer.children[i].classList.contains("selected")) {
+                if(i > 1 /* 1 because first is hint */ && event.key === "ArrowLeft") {
+                    SetImageViewHead(imgContainer.children[i - 1]);
+                    break;
+                }
+                if(i < imgContainer.children.length - 1 && event.key === "ArrowRight") {
+                    SetImageViewHead(imgContainer.children[i + 1]);
+                    break;
+                }
+            }
+        }
+    }
+    console.log(event);
+}
+
+const HideImpressions = () => {
+    document.getElementById('image-viewer').style.display = 'none';
+    document.removeEventListener("keydown", MoveImageSelectionInImageViewer);
+}
+
+const ShowImpressions = (year, folder) => {
+    const imageviewer = document.getElementById("image-viewer");
     imageviewer.style.display = "flex";
+    document.addEventListener("keydown", MoveImageSelectionInImageViewer);
     fetch("./impressions/get_impressions.php?year=" + year + "&folder=" + folder)
     .then(response => response.text())
     .then((data) => {
@@ -363,16 +391,16 @@ const ShowImpressions = (year, folder, imageviewer) => {
             image.onclick = () => SetImageViewHead(image, imageviewer);
             if(first === null) { first = image; }
         });
-        SetImageViewHead(first, imageviewer)
+        SetImageViewHead(first)
     });
 }
 
 // Sets the "head image" of the ImageView and set the smaller image as selected
-const SetImageViewHead = (replacementImage, imageviewer) => {
+const SetImageViewHead = (replacementImage) => {
+    const imageviewer = document.getElementById("image-viewer");
     Array.from(imageviewer.getElementsByClassName("sideway-scrollable-container")[0].children)  // unselect all images
          .forEach(c => c.classList.remove("selected"));
     replacementImage.classList.add("selected");                                         // select clicked image
     imageviewer.children[0].src     = replacementImage.src;                             // set source of big image
     imageviewer.children[0].onclick = () => window.open(replacementImage.src, "_blank") // on click of big image, open full quality
-    // TODO: REPLACEMENT IMAGE REAL PAHT (NOT THUMBNAIL) SET AS WINDOW OPEN
 }
