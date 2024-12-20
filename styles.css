@@ -313,12 +313,11 @@ section > .section-content > .sideway-scrollable-container {
 }
 
 #image-viewer .selected {
-    box-shadow: 0 0 2vw white;
+    box-shadow: 0 0 0.5rem white;
 }
 
 #image-viewer > div {
     height: 15vh;
-    padding-top: 3vh;
 }
 
 #image-viewer > div > img {
