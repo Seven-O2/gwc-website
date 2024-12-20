@@ -1,3 +1,5 @@
+const months = [ "Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember" ];
+
 // Passed elements follow the mouse
 const FollowMouse = (elements) => {
     let imageXOffset = -0.5;
@@ -82,9 +84,9 @@ const getIconWithText = (iconSrc, iconAlt, text) => {
     return container;
 }
 
-// Creates the board
-const CreateBoard = (parent, file) => {
-    FetchCSV(file).then(data => {
+// Creates the board from /data/board.csv
+const CreateBoard = (parent) => {
+    FetchCSV("/data/board.csv").then(data => {
         data.forEach(ev => {
             // [0] => Title, [1] => Name, [2] => Phone, [3] => Mail, [4] => Image
             const card = document.createElement("card");
@@ -123,42 +125,16 @@ const CreateBoard = (parent, file) => {
             }
         });
     }).catch(error => {
-        console.log(error);
+        console.error(error);
         const title = document.createElement("h2");
         title.innerHTML = "Daten konnten nicht geladen werden.";
         parent.appendChild(title);
     });
 }
 
-// Create the shop
-const CreateShop = (parent, file) => {
-    FetchCSV(file).then(data => {
-        data.forEach(ev => {
-            // [0] => Title, [1] => First Line, [2] => Second line, [3] => image link  
-            const card = document.createElement("div");
-            card.classList.add("card");
-            parent.appendChild(card);
-            
-            const image = document.createElement("img");
-            image.classList.add("full");
-            image.src = "images/shop/" + ev[2];
-            image.alt = ev[0];
-            card.appendChild(image);
-
-            const title = document.createElement("h2");
-            title.innerHTML = ev[0];
-            card.appendChild(title);
-            
-            const row1 = document.createElement("h4");
-            row1.innerHTML = ev[1];
-            card.appendChild(row1);
-        });
-    });
-}
-
-// Creates the dates on the webpage according to the passed file
-const CreateDates = (parent, file) => {
-    FetchCSV(file).then(data => {
+// Creates the dates on the webpage from /data/dates.csv
+const CreateDates = (parent) => {
+    FetchCSV("/data/dates.csv").then(data => {
         data.forEach(ev => {
             // [0] => Title, [1] => Subtitle, [2] => Date, [3] => Latitude, [4] => Longitude, [5] => Organizer, [6] => Cancelled, [7] => Logo
             const card = document.createElement("div");
@@ -269,10 +245,39 @@ const CreateDates = (parent, file) => {
     });
 }
 
-// Creates the ranking using a server side script
-const CreateRankings = (parent, phpScript) => {
-    const months = [ "Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember" ];
-    fetch(phpScript)
+// Create the shop from /data/shop.csv
+const CreateShop = (parent) => {
+    FetchCSV("/data/shop.csv").then(data => {
+        data.forEach(ev => {
+            // [0] => Title, [1] => First Line, [2] => Second line, [3] => image link  
+            const card = document.createElement("div");
+            card.classList.add("card");
+            parent.appendChild(card);
+            
+            const image = document.createElement("img");
+            image.classList.add("full");
+            image.src = "images/shop/" + ev[2];
+            image.alt = ev[0];
+            card.appendChild(image);
+
+            const title = document.createElement("h2");
+            title.innerHTML = ev[0];
+            card.appendChild(title);
+            
+            const row1 = document.createElement("h4");
+            row1.innerHTML = ev[1];
+            card.appendChild(row1);
+        });
+    });
+}
+
+// Creates the ranking using the server side script "list_rankings.php" which returns all rankings on the server:
+// {
+// "2024": ["YY_MM_NAME1", "YY_MM_NAME2" ...] => YY_MM is optional, if not specified no date is converted
+// }
+// }
+const CreateRankings = (parent) => {
+    fetch("/documents/rankings/list_rankings.php")
     .then(response => response.text())
     .then((data) => {
         const json = JSON.parse(data);
@@ -301,8 +306,8 @@ const CreateRankings = (parent, phpScript) => {
 }
 
 // Create impressions from returned php script (card with image and location, separated by year)
-const CreateImpressions = (parent, phpScript) => {
-    fetch(phpScript)
+const CreateImpressions = (parent) => {
+    fetch("./impressions/list_impressions.php")
     .then(response => response.text())
     .then((data) => {
         const json = JSON.parse(data);
@@ -319,12 +324,14 @@ const CreateImpressions = (parent, phpScript) => {
                 const container = document.createElement("card");
                 container.classList.add("card");
                 container.classList.add("clickable");
+                container.onclick = () => {
+                    ShowImpressions(year, event, document.getElementById("image-viewer"));
+                };
                 parent.appendChild(container);
 
                 const image = document.createElement("img");
                 image.classList.add("full")
                 image.src = json[year][event];
-                console.log(image.src)
                 container.appendChild(image);
 
                 const place = document.createElement("h2")
@@ -335,12 +342,37 @@ const CreateImpressions = (parent, phpScript) => {
     });
 }
 
-// Sets the "head image" of the overlay and set the smaller image as selected
-const setOverlayImage = (replacementImage) => {
-    const overlay = document.getElementById("impression-overlay");
-    Array.from(overlay.getElementsByClassName("sideway-scrollable-container")[0].children)
+const ShowImpressions = (year, folder, imageviewer) => {
+    imageviewer.style.display = "flex";
+    fetch("./impressions/get_impressions.php?year=" + year + "&folder=" + folder)
+    .then(response => response.text())
+    .then((data) => {
+        const json = JSON.parse(data);
+        let first = null;
+        imgContainer = imageviewer.getElementsByClassName("sideway-scrollable-container")[0];
+        // Clean previous images
+        while(imgContainer.children.length > 1) {
+            imgContainer.removeChild(imgContainer.lastChild);
+        }
+
+        // Iterate json and add all impressions
+        json.forEach(imageName => {
+            const image = document.createElement("img");
+            image.src = "/impressions/" + year + "/" + folder + "/" + imageName;
+            imgContainer.appendChild(image);
+            image.onclick = () => SetImageViewHead(image, imageviewer);
+            if(first === null) { first = image; }
+        });
+        SetImageViewHead(first, imageviewer)
+    });
+}
+
+// Sets the "head image" of the ImageView and set the smaller image as selected
+const SetImageViewHead = (replacementImage, imageviewer) => {
+    Array.from(imageviewer.getElementsByClassName("sideway-scrollable-container")[0].children)  // unselect all images
          .forEach(c => c.classList.remove("selected"));
-    replacementImage.classList.add("selected")
-    overlay.children[0].src = replacementImage.src;
-    overlay.children[0].onclick = () => window.open(replacementImage.src, "_blank")
+    replacementImage.classList.add("selected");                                         // select clicked image
+    imageviewer.children[0].src     = replacementImage.src;                             // set source of big image
+    imageviewer.children[0].onclick = () => window.open(replacementImage.src, "_blank") // on click of big image, open full quality
+    // TODO: REPLACEMENT IMAGE REAL PAHT (NOT THUMBNAIL) SET AS WINDOW OPEN
 }
