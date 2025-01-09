@@ -118,15 +118,18 @@ section > .section-content > * {
 
 /* Sideways scrollable */
 .sideway-scrollable-container {
-    scrollbar-width: none;
-    position:        relative;
-    display:         flex;
-    overflow:        auto;
-    scrollbar-width: none;
-    padding-top:     1rem;
-    padding-bottom:  2rem;
-    padding-left:    var(--default-spacing);
-    padding-right:   var(--default-spacing);
+    scrollbar-width:     none;
+    position:            relative;
+    display:             flex;
+    overflow:            auto;
+    scrollbar-width:     none;
+    padding-top:         1rem;
+    padding-bottom:      2rem;
+    padding-left:        var(--default-spacing);
+    padding-right:       var(--default-spacing);
+    cursor:              grab;
+    user-select:         none;
+    -webkit-user-select: none;
 }
 
 .sideway-scrollable-container::-webkit-scrollbar {
