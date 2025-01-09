@@ -5,6 +5,8 @@ html {
     --primary-color:   #fde5cb;
     --primary-color-weak: rgba(253,229,203,0.9);
     --default-spacing:   5vw;
+    width:               100vw;
+    overflow-x:          hidden;
 }
 
 @media screen and (max-width: 1000px) {
