@@ -90,7 +90,7 @@ const VerticallyScrollableByDrag = (elements) => {
 // 2221;2222;2223
 // csv[0][2] returns 1113
 const FetchCSV = async (file) => {
-    const response = await fetch(file);
+    const response = await fetch(file, { cache: 'no-cache' });
     if (response.status !== 200) {
         throw new Error("Couldn't load data");
     }

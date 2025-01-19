@@ -584,7 +584,7 @@ nav > :last-child  { margin-right: var(--default-spacing); }
         margin-top:    1rem;
         margin-bottom: 1rem;
         text-align:    right;
-        color:       white;
+        color:       black;
         text-shadow:   none;
     }
 
