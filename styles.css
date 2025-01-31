@@ -58,6 +58,11 @@ a {
     text-decoration: none;
 }
 
+a:hover {
+    color:         darkgray;
+    text-decoration: none;
+}
+
 footer {
     white-space: nowrap;
     padding:          var(--default-spacing);
