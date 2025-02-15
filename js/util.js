@@ -36,3 +36,12 @@ export const getIconWithText = (iconSrc, iconAlt, text) => {
     container.appendChild(text);
     return container;
 }
+
+
+// Adds a date dependend query to a link to force reloading everytime
+export const forceCacheRefresh = (elements) => {
+    elements.forEach(e => {
+        e.href = e.href + "?" + Date.now();
+        console.log(e.href)
+    });
+}

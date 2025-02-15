@@ -41,7 +41,7 @@
     <section id="about">
       <h1 class="section-title">Über uns</h1>
       <div class="section-content">
-        <p>Mitte 1982 hatten drei Leute die Idee einen Geländewagen Club zu gründen. Im November des selben Jahres wurde der GWC (Geländewagenclub Schweiz) in Niederweningen ZH gegründet. Anwesend waren ca. 25 Geländewagenfahrer die ihrem Hobby frönen wollten. Er versteht sich als Markenunabhängiger Club. Es wurden gemeinsam diverse Trials in Deutschland und in der Schweiz besucht. Bald organisierte der GWC Trials des Schweizerischen Trialcup. Der Schweizerische Trialcup war der Vorläufer des heutigen Dachverbandes FSG. Der Club hat einen Bestand von 114 Mitgliedern, davon 76 Aktive (Stand GV 2025). Möchtest Du auch ein Mitglied des GWC-Schweiz werden? Dann sende den ausgefüllten <a href="/documents/gwc_neumitglied.pdf" target="_blank">Neumitgliederantrag</a> an uns!</p>
+        <p>Mitte 1982 hatten drei Leute die Idee einen Geländewagen Club zu gründen. Im November des selben Jahres wurde der GWC (Geländewagenclub Schweiz) in Niederweningen ZH gegründet. Anwesend waren ca. 25 Geländewagenfahrer die ihrem Hobby frönen wollten. Er versteht sich als Markenunabhängiger Club. Es wurden gemeinsam diverse Trials in Deutschland und in der Schweiz besucht. Bald organisierte der GWC Trials des Schweizerischen Trialcup. Der Schweizerische Trialcup war der Vorläufer des heutigen Dachverbandes FSG. Der Club hat einen Bestand von 114 Mitgliedern, davon 76 Aktive (Stand GV 2025). Möchtest Du auch ein Mitglied des GWC-Schweiz werden? Dann sende den ausgefüllten <a class="no-cache" href="/documents/gwc_neumitglied.pdf" target="_blank">Neumitgliederantrag</a> an uns!</p>
         <p><b>Ziel und Zweck unseres Sportes</b></p>
         <ul>
           <li>Förderung einer positiven Grundeinstellung zum Geländefahrzeug.</li>
@@ -54,8 +54,8 @@
           <!-- Board filled by javascript -->
         </div>
         <div class="bylaws-specification-container">
-          <a class="button-like" href="/documents/gwc_statuten.pdf" target="_blank">Statuten</a>
-          <a class="button-like" href="/documents/gwc_pflichtenheft.pdf" target="_blank">Pflichtenheft</a>
+          <a class="button-like no-cache" href="/documents/gwc_statuten.pdf" target="_blank">Statuten</a>
+          <a class="button-like no-cache" href="/documents/gwc_pflichtenheft.pdf" target="_blank">Pflichtenheft</a>
         </div>
       </div>
     </section>
@@ -73,7 +73,7 @@
       <div class="section-content">
         <p>Neben den fünf offiziellen Klassen Original, Standard, Modified, Promodified und Prototype können in der Schweiz Fahrzeuge unter der Klasse Fun-Cup und Offen fahren. Damit ein Fahrzeug in einer Klasse starten kann, muss es dem Regelment entsprechen. Ob ein Fahrzeug dem Reglement entspricht wird beim Starten des ersten Laufes überprüft. GWC-Läufe werden nach dem FSG-Regelement durchgeführt. Siehe die <a href="https://4x4fsg.ch/">offizielle Website der FSG</a>.</p>
         <div class="regulations-container">
-          <a class="button-like nocache" href="./documents/fsg_reglement.pdf" target="_blank">Reglement (FSG)</a>
+          <a class="button-like no-cache" href="https://4x4fsg.ch/documents/fsg_reglement.pdf" target="_blank">Reglement (FSG)</a>
         </div>
         <div class="sideway-scrollable-container">
           <div class="hint">Weitere Klassen →</div>
@@ -172,6 +172,7 @@
     import * as imageViewer from "./js/imageViewer.js";
     import * as animations from "./js/animations.js" ;
     import * as dynamicBuilder from "./js/dynamicBuilder.js";
+    import { forceCacheRefresh } from "/js/util.js"
     const impressionImageViewerController = imageViewer.imageViewerController(document.getElementById("impressions-image-viewer"))
     window.impressionImageViewerController = impressionImageViewerController; // Make available to close button
     /* ANIMATIONS */
@@ -187,9 +188,11 @@
 
     /* BUILD DYNAMIC CONTENT */
     dynamicBuilder.createBoard(      document.getElementById("about")       .getElementsByClassName("sideway-scrollable-container")[0]);
-    dynamicBuilder.createDates(      document.getElementById("termine")     .getElementsByClassName("section-content")[0])
+    dynamicBuilder.createDates(      document.getElementById("termine")     .getElementsByClassName("section-content")[0]);
     dynamicBuilder.createImpressions(document.getElementById("impressionen").getElementsByClassName("sideway-scrollable-container")[0], impressionImageViewerController);
     dynamicBuilder.createShop(       document.getElementById("shop")        .getElementsByClassName("sideway-scrollable-container")[0]);
     dynamicBuilder.createRankings(   document.getElementById("ranglisten")  .getElementsByClassName("section-content")[0]);
+
+    forceCacheRefresh([...document.getElementsByClassName("no-cache")])
   </script>
 </html>
