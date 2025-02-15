@@ -1,124 +1,17 @@
+/*
+ * This file contains the site specific builder functions which dynamically loads content from 
+ * the server (fetch)
+ */
+
+//import { imageViewerController } from "./Modules/imageViewer";
+import { flyInFromBottom } from "./animations.js";
+import { fetchCSV, getIconWithText } from "./util.js";
+
 const months = [ "Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember" ];
 
-// Passed elements follow the mouse
-const FollowMouse = (elements) => {
-    let imageXOffset = -0.5;
-    let imageYOffset = -0.5;
-
-    let posXOld = 0;
-    let posYOld = 0;
-
-    document.addEventListener("mousemove", e => {
-        const deltaX = (e.clientX - posXOld) / 500
-        const deltaY = (e.clientY - posYOld) / 500
-      
-        posXOld = e.clientX;
-        posYOld = e.clientY;
-        
-        imageXOffset = Math.min(0, Math.max(-1, imageXOffset + deltaX));
-        imageYOffset = Math.min(0, Math.max(-1, imageYOffset + deltaY));
-
-        elements.forEach(element => {
-            element.style.left = imageXOffset + "vw"; 
-            element.style.top  = imageYOffset + "vw";
-        });
-    }, false);
-}
-
-// Passed elements follow scroll in an inverse manner
-const FollowScrollInverse = (elements) => {
-    document.addEventListener("scroll", _ => {
-        const scrollPosition = document.documentElement.scrollTop || document.body.scrollTop;
-        elements.forEach(element => {
-            element.style.top = -1 * scrollPosition / 2 + "px";
-        });
-    }, false);
-}
-
-// When top (plus delay) reaches bottom of screen, start reducing margin (thus making a fly in animation)
-const FlyInFromBottom = (elements) => {
-    document.addEventListener("scroll", _ => {
-        Array.from(elements).forEach(element => {
-            const offsetFromBottom = window.innerHeight - element.getBoundingClientRect().top + parseInt(getComputedStyle(element).marginTop); // represents the offset of the sections start to the screens center
-            if(offsetFromBottom > 0) {
-                element.style.marginTop = Math.min(16, Math.max(0, 16 - offsetFromBottom / 20)) + "vh"; 
-            } else {
-                element.style.marginTop = 0; // if the element is out of bounds, set it's margin to 0 (so anchor link jumping works)
-            }
-            
-        });
-    }, false);
-}
-
-// Allows a veritcally scrollable container to be grabbed by a mouse event and moved
-const VerticallyScrollableByDrag = (elements) => {
-    Array.from(elements).forEach(element => { 
-        let canDrag = false;
-        let initialMousePositionX;
-        let initialScrollPosition;
-
-        element.addEventListener('mousedown', (e) => {
-            canDrag               = true;
-            element.style.cursor  = 'grabbing';
-            initialMousePositionX = e.pageX;
-            initialScrollPosition = element.scrollLeft;
-        });
-    
-        element.addEventListener('mouseleave', () => {
-            canDrag              = false;
-            element.style.cursor = 'grab';
-        });
-    
-        element.addEventListener('mouseup', () => {
-            canDrag              = false;
-            element.style.cursor = 'grab';
-        });
-    
-        element.addEventListener('mousemove', (e) => {
-            if (!canDrag) return;
-            e.preventDefault();
-            element.scrollLeft = initialScrollPosition - (e.pageX /* mouse position */ - initialMousePositionX);
-        });
-    });
-}
-
-// Fetches a CSV file and returns a promise that, when fulfilled, contains the dismanteld csv file
-// In the end a 2 dimensional array is returned. The first dimension contains the row, the second
-// the csv entries.
-// VAL1;VAL2;VAL3
-// 1111;1112;1113
-// 2221;2222;2223
-// csv[0][2] returns 1113
-const FetchCSV = async (file) => {
-    const response = await fetch(file, { cache: 'no-cache' });
-    if (response.status !== 200) {
-        throw new Error("Couldn't load data");
-    }
-    const response_1 = response;
-    const data = await response_1.text();
-    return data
-        .split(/\r\n|\n/)               // Split newlines
-        .splice(1)                      // Remove header
-        .filter(e => e !== "")          // Remove null lines
-        .map(e_1 => e_1.split(";"));    // Split values at semicolons
-}
-
-// Creates an icon with text for the passed icon and text
-const getIconWithText = (iconSrc, iconAlt, text) => {
-    icon = document.createElement("img");
-    icon.src = iconSrc;
-    icon.alt = iconAlt;
-
-    const container = document.createElement("div");
-    container.classList.add("icon-with-text");
-    container.appendChild(icon)
-    container.appendChild(text);
-    return container;
-}
-
-// Creates the board from /data/board.csv
-const CreateBoard = (parent) => {
-    FetchCSV("/data/board.csv").then(data => {
+// creates the board from /data/board.csv
+export const createBoard = (parent) => {
+    fetchCSV("/data/board.csv").then(data => {
         data.forEach(ev => {
             // [0] => Title, [1] => Name, [2] => Phone, [3] => Mail, [4] => Image
             const card = document.createElement("card");
@@ -164,9 +57,9 @@ const CreateBoard = (parent) => {
     });
 }
 
-// Creates the dates on the webpage from /data/dates.csv
-const CreateDates = (parent) => {
-    FetchCSV("/data/dates.csv").then(data => {
+// creates the dates on the webpage from /data/dates.csv
+export const createDates = (parent) => {
+    fetchCSV("/data/dates.csv").then(data => {
         data.forEach(ev => {
             // [0] => Title, [1] => Subtitle, [2] => Date, [3] => Latitude, [4] => Longitude, [5] => Organizer, [6] => Cancelled, [7] => Logo
             const card = document.createElement("div");
@@ -269,17 +162,18 @@ const CreateDates = (parent) => {
                 }
             }
         });
-        FlyInFromBottom([...document.getElementsByClassName("map-card")]);
-    }).catch(_ => {
+        flyInFromBottom([...document.getElementsByClassName("map-card")]);
+    }).catch(error => {
+        console.error(error)
         const title = document.createElement("h2");
         title.innerHTML = "Daten konnten nicht geladen werden.";
         parent.appendChild(title);
     });
 }
 
-// Create the shop from /data/shop.csv
-const CreateShop = (parent) => {
-    FetchCSV("/data/shop.csv").then(data => {
+// create the shop from /data/shop.csv
+export const createShop = (parent) => {
+    fetchCSV("/data/shop.csv").then(data => {
         data.forEach(ev => {
             // [0] => Title, [1] => First Line, [2] => Second line, [3] => image link  
             const card = document.createElement("div");
@@ -303,12 +197,12 @@ const CreateShop = (parent) => {
     });
 }
 
-// Creates the ranking using the server side script "list_rankings.php" which returns all rankings on the server:
+// creates the ranking using the server side script "list_rankings.php" which returns all rankings on the server:
 // {
 // "2024": ["YY_MM_NAME1", "YY_MM_NAME2" ...] => YY_MM is optional, if not specified no date is converted
 // }
 // }
-const CreateRankings = (parent) => {
+export const createRankings = (parent) => {
     fetch("/documents/rankings/list_rankings.php")
     .then(response => response.text())
     .then((data) => {
@@ -337,8 +231,12 @@ const CreateRankings = (parent) => {
     });
 }
 
-// Create impressions from returned php script (card with image and location, separated by year)
-const CreateImpressions = (parent) => {
+// create impressions from returned php script (card with image and location, separated by year)
+// While not loaded shows a loading screen
+export const createImpressions = (parent, imageViewer) => {
+    const placeholder = document.createElement("h2");
+    parent.appendChild(placeholder);
+    placeholder.innerHTML = "Lädt...";
     fetch("./impressions/list_impressions.php")
     .then(response => response.text())
     .then((data) => {
@@ -357,7 +255,7 @@ const CreateImpressions = (parent) => {
                 container.classList.add("card");
                 container.classList.add("clickable");
                 container.onclick = () => {
-                    ShowImpressions(year, event);
+                    imageViewer.show(year, event);
                 };
                 parent.appendChild(container);
 
@@ -371,68 +269,6 @@ const CreateImpressions = (parent) => {
                 container.appendChild(place);
             });
         });
+        placeholder.remove();
     });
-}
-
-const MoveImageSelectionInImageViewer = (event) => {
-    const imgContainer = document.getElementById("image-viewer")
-                                 .getElementsByClassName("sideway-scrollable-container")[0];
-    
-    if(event.key === "ArrowLeft" || event.key === "ArrowRight") {
-        for(let i = 0; i < imgContainer.children.length; i++) {
-            if(imgContainer.children[i].classList.contains("selected")) {
-                if(i > 1 /* 1 because first is hint */ && event.key === "ArrowLeft") {
-                    SetImageViewHead(imgContainer.children[i - 1]);
-                    break;
-                }
-                if(i < imgContainer.children.length - 1 && event.key === "ArrowRight") {
-                    SetImageViewHead(imgContainer.children[i + 1]);
-                    break;
-                }
-            }
-        }
-    }
-    console.log(event);
-}
-
-const HideImpressions = () => {
-    document.getElementById('image-viewer').style.display = 'none';
-    document.removeEventListener("keydown", MoveImageSelectionInImageViewer);
-}
-
-const ShowImpressions = (year, folder) => {
-    const imageviewer = document.getElementById("image-viewer");
-    imageviewer.style.display = "flex";
-    document.addEventListener("keydown", MoveImageSelectionInImageViewer);
-    fetch("./impressions/get_impressions.php?year=" + year + "&folder=" + folder)
-    .then(response => response.text())
-    .then((data) => {
-        const json = JSON.parse(data);
-        let first = null;
-        imgContainer = imageviewer.getElementsByClassName("sideway-scrollable-container")[0];
-        // Clean previous images
-        while(imgContainer.children.length > 1) {
-            imgContainer.removeChild(imgContainer.lastChild);
-        }
-
-        // Iterate json and add all impressions
-        json.forEach(imageName => {
-            const image = document.createElement("img");
-            image.src = "/impressions/" + year + "/" + folder + "/" + imageName;
-            imgContainer.appendChild(image);
-            image.onclick = () => SetImageViewHead(image, imageviewer);
-            if(first === null) { first = image; }
-        });
-        SetImageViewHead(first)
-    });
-}
-
-// Sets the "head image" of the ImageView and set the smaller image as selected
-const SetImageViewHead = (replacementImage) => {
-    const imageviewer = document.getElementById("image-viewer");
-    Array.from(imageviewer.getElementsByClassName("sideway-scrollable-container")[0].children)  // unselect all images
-         .forEach(c => c.classList.remove("selected"));
-    replacementImage.classList.add("selected");                                         // select clicked image
-    imageviewer.children[0].src     = replacementImage.src;                             // set source of big image
-    imageviewer.children[0].onclick = () => window.open(replacementImage.src, "_blank") // on click of big image, open full quality
 }

@@ -73,7 +73,7 @@
       <div class="section-content">
         <p>Neben den fünf offiziellen Klassen Original, Standard, Modified, Promodified und Prototype können in der Schweiz Fahrzeuge unter der Klasse Fun-Cup und Offen fahren. Damit ein Fahrzeug in einer Klasse starten kann, muss es dem Regelment entsprechen. Ob ein Fahrzeug dem Reglement entspricht wird beim Starten des ersten Laufes überprüft. GWC-Läufe werden nach dem FSG-Regelement durchgeführt. Siehe die <a href="https://4x4fsg.ch/">offizielle Website der FSG</a>.</p>
         <div class="regulations-container">
-          <a class="button-like" href="./documents/fsg_reglement.pdf" target="_blank">Reglement (FSG)</a>
+          <a class="button-like nocache" href="./documents/fsg_reglement.pdf" target="_blank">Reglement (FSG)</a>
         </div>
         <div class="sideway-scrollable-container">
           <div class="hint">Weitere Klassen →</div>
@@ -159,31 +159,37 @@
       <p class="copyright">&copy GWC-Schweiz, alle Rechte vorbehalten</p>
     </footer>
     <!--######## IMAGE VIEW OVERLAY => DISPLAYS A SET OF IMAGES ########-->
-    <div id="image-viewer">
+    <div class="image-viewer" id="impressions-image-viewer">
       <img src="" alt="Title Image">
       <div class="sideway-scrollable-container">
         <div class="hint">Mehr Bilder →</div>
       </div>
-      <button onclick="HideImpressions()">X</button>
+      <button onclick="impressionImageViewerController.hide()">X</button>
     </div>
   </body>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script> <!-- Leaflet -->
-  <script src="./functions.js"></script>
-    <script>
-      FollowScrollInverse([document.getElementById("title-text-container")]);
-      FlyInFromBottom([...document.getElementsByClassName("section-title")]);
-      FlyInFromBottom([...document.getElementsByClassName("sideway-scrollable-container")]);
-      VerticallyScrollableByDrag([...document.getElementsByClassName("sideway-scrollable-container")]);
-  
-      // Title image follow mouse (if applicable)
-      if(window.screen.width > 1000) {
-          FollowMouse([document.getElementById("title-image"), document.getElementById("title-image-overlay")]);
-      }
-      CreateBoard(      document.getElementById("about")       .getElementsByClassName("sideway-scrollable-container")[0]);
-      CreateDates(      document.getElementById("termine")     .getElementsByClassName("section-content")[0])
-      CreateImpressions(document.getElementById("impressionen").getElementsByClassName("sideway-scrollable-container")[0]);
-      CreateShop(       document.getElementById("shop")        .getElementsByClassName("sideway-scrollable-container")[0]);
-      CreateRankings(   document.getElementById("ranglisten")  .getElementsByClassName("section-content")[0]);
-      
-    </script>
+  <script type="module">
+    import * as imageViewer from "./js/imageViewer.js";
+    import * as animations from "./js/animations.js" ;
+    import * as dynamicBuilder from "./js/dynamicBuilder.js";
+    const impressionImageViewerController = imageViewer.imageViewerController(document.getElementById("impressions-image-viewer"))
+    window.impressionImageViewerController = impressionImageViewerController; // Make available to close button
+    /* ANIMATIONS */
+    animations.followScrollInverse([document.getElementById("title-text-container")]);
+    animations.flyInFromBottom([...document.getElementsByClassName("section-title")]);
+    animations.flyInFromBottom([...document.getElementsByClassName("sideway-scrollable-container")]);
+    animations.mouseDragSideways([...document.getElementsByClassName("sideway-scrollable-container")]);
+
+    // Title image follow mouse (if applicable)
+    if(window.screen.width > 1000) {
+        animations.followMouse([document.getElementById("title-image"), document.getElementById("title-image-overlay")]);
+    }
+
+    /* BUILD DYNAMIC CONTENT */
+    dynamicBuilder.createBoard(      document.getElementById("about")       .getElementsByClassName("sideway-scrollable-container")[0]);
+    dynamicBuilder.createDates(      document.getElementById("termine")     .getElementsByClassName("section-content")[0])
+    dynamicBuilder.createImpressions(document.getElementById("impressionen").getElementsByClassName("sideway-scrollable-container")[0], impressionImageViewerController);
+    dynamicBuilder.createShop(       document.getElementById("shop")        .getElementsByClassName("sideway-scrollable-container")[0]);
+    dynamicBuilder.createRankings(   document.getElementById("ranglisten")  .getElementsByClassName("section-content")[0]);
+  </script>
 </html>
