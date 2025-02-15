@@ -5,12 +5,13 @@
 
 //import { imageViewerController } from "./Modules/imageViewer";
 import { flyInFromBottom } from "./animations.js";
-import { fetchCSV, getIconWithText } from "./util.js";
+import { fetchCSV, getIconWithText, loader } from "./util.js";
 
 const months = [ "Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember" ];
 
 // creates the board from /data/board.csv
 export const createBoard = (parent) => {
+    const boardLoader = loader(parent);
     fetchCSV("/data/board.csv").then(data => {
         data.forEach(ev => {
             // [0] => Title, [1] => Name, [2] => Phone, [3] => Mail, [4] => Image
@@ -49,16 +50,20 @@ export const createBoard = (parent) => {
                 card.appendChild(getIconWithText("/images/icons/mail.svg", "E-Mail Adresse", mail));
             }
         });
+        boardLoader.hide();
+        console.log("HERE");
     }).catch(error => {
         console.error(error);
         const title = document.createElement("h2");
         title.innerHTML = "Daten konnten nicht geladen werden.";
         parent.appendChild(title);
+        boardLoader.hide();
     });
 }
 
 // creates the dates on the webpage from /data/dates.csv
 export const createDates = (parent) => {
+    const datesLoader = loader(parent);
     fetchCSV("/data/dates.csv").then(data => {
         data.forEach(ev => {
             // [0] => Title, [1] => Subtitle, [2] => Date, [3] => Latitude, [4] => Longitude, [5] => Organizer, [6] => Cancelled, [7] => Logo
@@ -163,16 +168,19 @@ export const createDates = (parent) => {
             }
         });
         flyInFromBottom([...document.getElementsByClassName("map-card")]);
+        datesLoader.hide();
     }).catch(error => {
         console.error(error)
         const title = document.createElement("h2");
         title.innerHTML = "Daten konnten nicht geladen werden.";
         parent.appendChild(title);
+        datesLoader.hide();
     });
 }
 
 // create the shop from /data/shop.csv
 export const createShop = (parent) => {
+    const shopLoader = loader(parent);
     fetchCSV("/data/shop.csv").then(data => {
         data.forEach(ev => {
             // [0] => Title, [1] => First Line, [2] => Second line, [3] => image link  
@@ -194,6 +202,13 @@ export const createShop = (parent) => {
             row1.innerHTML = ev[1];
             card.appendChild(row1);
         });
+        shopLoader.hide();
+    }).catch(error => {
+        console.error(error);
+        const title = document.createElement("h2");
+        title.innerHTML = "Daten konnten nicht geladen werden.";
+        parent.appendChild(title);
+        shopLoader.hide();
     });
 }
 
@@ -203,6 +218,7 @@ export const createShop = (parent) => {
 // }
 // }
 export const createRankings = (parent) => {
+    const rankingsLoader = loader(parent);
     fetch("/documents/rankings/list_rankings.php")
     .then(response => response.text())
     .then((data) => {
@@ -228,15 +244,20 @@ export const createRankings = (parent) => {
                 rankingContainer.appendChild(link);
             });
         });
+        rankingsLoader.hide();
+    }).catch(error => {
+        console.error(error);
+        const title = document.createElement("h2");
+        title.innerHTML = "Daten konnten nicht geladen werden.";
+        parent.appendChild(title);
+        rankingsLoader.hide();
     });
 }
 
 // create impressions from returned php script (card with image and location, separated by year)
 // While not loaded shows a loading screen
 export const createImpressions = (parent, imageViewer) => {
-    const placeholder = document.createElement("h2");
-    parent.appendChild(placeholder);
-    placeholder.innerHTML = "Lädt...";
+    const impressionsLoader = loader(parent);
     fetch("./impressions/list_impressions.php")
     .then(response => response.text())
     .then((data) => {
@@ -269,6 +290,6 @@ export const createImpressions = (parent, imageViewer) => {
                 container.appendChild(place);
             });
         });
-        placeholder.remove();
+        impressionsLoader.hide();
     });
 }

@@ -42,6 +42,24 @@ export const getIconWithText = (iconSrc, iconAlt, text) => {
 export const forceCacheRefresh = (elements) => {
     elements.forEach(e => {
         e.href = e.href + "?" + Date.now();
-        console.log(e.href)
     });
+}
+
+// Adds a little offroad loader that can be shown/hidden
+export const loader = (parent) => {
+    const div = document.createElement("div");
+    div.classList.add("loader");
+    div.style.display = "flex";
+    const img = document.createElement("img");
+    img.src = "/images/icons/wheel.png"
+    div.appendChild(img);
+    const text = document.createElement("h3");
+    text.innerHTML = "Lädt...";
+    div.appendChild(text);
+    parent.appendChild(div);
+
+    return {
+        show: () => { div.style.display = "flex";},
+        hide: () => { div.style.display = "none"; }
+    }
 }

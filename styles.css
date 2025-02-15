@@ -233,6 +233,23 @@ section > .section-content > .sideway-scrollable-container {
 .card p {
     margin: 0;
 }
+/* Loading icon */
+.loader {
+    height: 20vh;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.loader > img {
+    height: 20vh;
+    animation: rotate 2s infinite linear;
+}
+
+.loader > h3 {
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: 1rem;
+}
 
 /* Filler */
 .horizontal-spacer {
@@ -745,5 +762,14 @@ nav > :last-child  { margin-right: var(--default-spacing); }
     }
     60% {
         transform: translateX(0);
+    }
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
     }
 }

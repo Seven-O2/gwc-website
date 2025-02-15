@@ -10,11 +10,11 @@ export const imageViewerController = (imageViewer) => {
             for(let i = 0; i < imageViewer.children.length; i++) {
                 if(imageViewer.children[i].classList.contains("selected")) {
                     if(i > 1 /* 1 because first is hint */ && event.key === "ArrowLeft") {
-                        SetImageViewHead(imageViewer.children[i - 1]);
+                        setImageViewHead(imageViewer.children[i - 1]);
                         break;
                     }
                     if(i < imageViewer.children.length - 1 && event.key === "ArrowRight") {
-                        SetImageViewHead(imageViewer.children[i + 1]);
+                        setImageViewHead(imageViewer.children[i + 1]);
                         break;
                     }
                 }
@@ -23,7 +23,7 @@ export const imageViewerController = (imageViewer) => {
     }
 
     // Sets the "head image" of the ImageView and set the smaller image as selected
-    const SetImageViewHead = (replacementImage) => {
+    const setImageViewHead = (replacementImage) => {
         Array.from(imageViewer.getElementsByClassName("sideway-scrollable-container")[0].children)  // unselect all images
             .forEach(c => c.classList.remove("selected"));
         replacementImage.classList.add("selected");                                         // select clicked image
@@ -43,7 +43,6 @@ export const imageViewerController = (imageViewer) => {
             .then((data) => {
                 const json = JSON.parse(data);
                 let first = null;
-                console.log()
                 const imagesList = imageViewer.getElementsByClassName("sideway-scrollable-container")[0];
                 // Clean previous images
                 while(imagesList.children.length > 1) {
@@ -55,10 +54,10 @@ export const imageViewerController = (imageViewer) => {
                     const image = document.createElement("img");
                     image.src = "/impressions/" + year + "/" + folder + "/" + imageName;
                     imagesList.appendChild(image);
-                    image.onclick = () => SetImageViewHead(image, imageViewer);
+                    image.onclick = () => setImageViewHead(image, imageViewer);
                     if(first === null) { first = image; }
                 });
-                SetImageViewHead(first)
+                setImageViewHead(first);
             });
         }
     }
