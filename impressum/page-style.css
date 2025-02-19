@@ -1,0 +1,4 @@
+body > div {
+    padding: var(--default-spacing);
+    background-color: white;
+}

@@ -53,7 +53,7 @@ export const loader = (parent) => {
     const img = document.createElement("img");
     img.src = "/images/icons/wheel.png"
     div.appendChild(img);
-    const text = document.createElement("h3");
+    const text = document.createElement("p");
     text.innerHTML = "Lädt...";
     div.appendChild(text);
     parent.appendChild(div);

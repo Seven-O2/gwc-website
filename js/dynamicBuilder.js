@@ -3,7 +3,6 @@
  * the server (fetch)
  */
 
-//import { imageViewerController } from "./Modules/imageViewer";
 import { flyInFromBottom } from "./animations.js";
 import { fetchCSV, getIconWithText, loader } from "./util.js";
 
@@ -51,7 +50,6 @@ export const createBoard = (parent) => {
             }
         });
         boardLoader.hide();
-        console.log("HERE");
     }).catch(error => {
         console.error(error);
         const title = document.createElement("h2");

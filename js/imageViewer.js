@@ -3,7 +3,26 @@
  * an image viewer,
  */
 
-export const imageViewerController = (imageViewer) => {
+export const imageViewerController = () => {
+    const body = document.getElementsByTagName("body")[0];
+
+    const imageViewer = document.createElement("div");
+    imageViewer.classList.add("image-viewer");
+    body.appendChild(imageViewer);
+    
+    const titleImage = document.createElement("img");
+    titleImage.alt = "Title Image";
+    imageViewer.appendChild(titleImage);
+
+    const imagePreview = document.createElement("div");
+    imagePreview.classList.add("image-preview-container");
+    imageViewer.appendChild(imagePreview);
+
+    const imagePreviewHint = document.createElement("div");
+    imagePreviewHint.classList.add("hint");
+    imagePreviewHint.innerHTML = "Mehr Bilder →";
+    imagePreview.appendChild(imagePreviewHint);
+
     // Event that happens when the arrow was pressed
     const OnArrowPress = (event) => {
         if(event.key === "ArrowLeft" || event.key === "ArrowRight") {
@@ -24,17 +43,23 @@ export const imageViewerController = (imageViewer) => {
 
     // Sets the "head image" of the ImageView and set the smaller image as selected
     const setImageViewHead = (replacementImage) => {
-        Array.from(imageViewer.getElementsByClassName("sideway-scrollable-container")[0].children)  // unselect all images
+        Array.from(imageViewer.getElementsByClassName("image-preview-container")[0].children)  // unselect all images
             .forEach(c => c.classList.remove("selected"));
         replacementImage.classList.add("selected");                                         // select clicked image
         imageViewer.children[0].src     = replacementImage.src;                             // set source of big image
         imageViewer.children[0].onclick = () => window.open(replacementImage.src, "_blank") // on click of big image, open full quality
     }
+
+    // Finally close button => requires methods to be defined
+    const closeButton = document.createElement("button");
+    closeButton.onclick = () => {
+        imageViewer.style.display = 'none';
+        document.removeEventListener("keydown", OnArrowPress);
+    }
+    closeButton.innerHTML = "X";
+    imageViewer.appendChild(closeButton);
+
     return {
-        hide: () => {
-            imageViewer.style.display = 'none';
-            document.removeEventListener("keydown", OnArrowPress);
-        },
         show: (year, folder) => {
             imageViewer.style.display = "flex";
             document.addEventListener("keydown", OnArrowPress);
@@ -43,7 +68,7 @@ export const imageViewerController = (imageViewer) => {
             .then((data) => {
                 const json = JSON.parse(data);
                 let first = null;
-                const imagesList = imageViewer.getElementsByClassName("sideway-scrollable-container")[0];
+                const imagesList = imageViewer.getElementsByClassName("image-preview-container")[0];
                 // Clean previous images
                 while(imagesList.children.length > 1) {
                     imagesList.removeChild(imagesList.lastChild);

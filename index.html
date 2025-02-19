@@ -9,6 +9,8 @@
     <link href="https://fonts.cdnfonts.com/css/jenkine" rel="stylesheet">                <!-- Jenkine Font (brushed )-->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">      <!-- leaflet -->
     <link rel="stylesheet" href="./styles.css">
+    <link rel="stylesheet" href="./page-style.css">
+    <link rel="stylesheet" href="./image-viewer.css">
     <link rel="icon" type="image/x-icon" href="./images/icons/favicon.ico">
     <title>Geländewagenclub Schweiz - GWC</title>
   </head>
@@ -144,28 +146,18 @@
     </section>
     <footer>
       <div>
-        <div>
-          <p><a href="./impressum/">Impressum</a></p>
-          <p><a href="https://www.facebook.com/100063471430913">Facebook</a></p>
-          <p><a href="https://www.autoteilexxl.ch">Autoteile XXL</a></p>
-          <p><a href="https://www.euro4x4parts.com/en">euro4x4parts</a></p>
-          <p><a href="https://www.4x4fsg.ch">FSG</a></p>
-          <p><a href="https://www.pkwteile.ch">PKW Teile</a></p>
-        </div>
-        
-        <div class="horizontal-spacer"></div>
-        <a href="https://www.hosttime.ch/my/clientarea.php">Anmelden</a>
+        <p><a href="./impressum/">Impressum</a></p>
+        <p><a href="https://www.facebook.com/100063471430913">Facebook</a></p>
+        <p><a href="https://www.autoteilexxl.ch">Autoteile XXL</a></p>
+        <p><a href="https://www.euro4x4parts.com/en">euro4x4parts</a></p>
+        <p><a href="https://www.4x4fsg.ch">FSG</a></p>
+        <p><a href="https://www.pkwteile.ch">PKW Teile</a></p>
+        <p class="copyright">&copy GWC-Schweiz, alle Rechte vorbehalten</p>
       </div>
-      <p class="copyright">&copy GWC-Schweiz, alle Rechte vorbehalten</p>
+      <div>
+        <p><a href="https://www.hosttime.ch/my/clientarea.php">Anmelden</a></p>
+      </div>
     </footer>
-    <!--######## IMAGE VIEW OVERLAY => DISPLAYS A SET OF IMAGES ########-->
-    <div class="image-viewer" id="impressions-image-viewer">
-      <img src="" alt="Title Image">
-      <div class="sideway-scrollable-container">
-        <div class="hint">Mehr Bilder →</div>
-      </div>
-      <button onclick="impressionImageViewerController.hide()">X</button>
-    </div>
   </body>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script> <!-- Leaflet -->
   <script type="module">
@@ -173,8 +165,7 @@
     import * as animations from "./js/animations.js" ;
     import * as dynamicBuilder from "./js/dynamicBuilder.js";
     import { forceCacheRefresh } from "/js/util.js"
-    const impressionImageViewerController = imageViewer.imageViewerController(document.getElementById("impressions-image-viewer"))
-    window.impressionImageViewerController = impressionImageViewerController; // Make available to close button
+    const impressionsImageViewer = imageViewer.imageViewerController(); // Create new image viewer
     /* ANIMATIONS */
     animations.followScrollInverse([document.getElementById("title-text-container")]);
     animations.flyInFromBottom([...document.getElementsByClassName("section-title")]);
@@ -189,7 +180,7 @@
     /* BUILD DYNAMIC CONTENT */
     dynamicBuilder.createBoard(      document.getElementById("about")       .getElementsByClassName("sideway-scrollable-container")[0]);
     dynamicBuilder.createDates(      document.getElementById("termine")     .getElementsByClassName("section-content")[0]);
-    dynamicBuilder.createImpressions(document.getElementById("impressionen").getElementsByClassName("sideway-scrollable-container")[0], impressionImageViewerController);
+    dynamicBuilder.createImpressions(document.getElementById("impressionen").getElementsByClassName("sideway-scrollable-container")[0], impressionsImageViewer);
     dynamicBuilder.createShop(       document.getElementById("shop")        .getElementsByClassName("sideway-scrollable-container")[0]);
     dynamicBuilder.createRankings(   document.getElementById("ranglisten")  .getElementsByClassName("section-content")[0]);
 
