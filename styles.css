@@ -3,7 +3,7 @@ html {
     font-size:          24px;
     scroll-behavior:    smooth;
     --primary-color:   #fde5cb;
-    --primary-color-weak: rgba(253,229,203,0.9);
+    --primary-color-weak: rgba(253,229,203,0.6);
     --default-spacing:   5vw;
     width:               100vw;
     overflow-x:          hidden;
@@ -65,33 +65,50 @@ a:hover {
 
 /******** Footer ********/
 footer {
-    display:          flex;
     white-space:      nowrap;
     padding:          var(--default-spacing);
     background-color: var(--primary-color);
-}
-
-footer > :first-child {
-    margin-right: auto;
+    display:          flex;
+    flex-direction:   column;
 }
 
 footer a {
-    text-decoration: none;
-    white-space:     nowrap;
-    color:         black;
-    margin-top:      auto;
-    margin-bottom:   auto;
-    margin-right:    2rem;
-    transition:      all 0.2s;
+    color: black;
+}
+
+footer > img {
+    height: 20vh;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+footer .socials {
+    margin-top:   0.5rem;
+    display:      flex;
+    margin-left:  auto;
+    margin-right: auto;
+}
+
+footer .socials > a > img {
+    width: 2rem;
+    margin: auto 1rem;
+    transition: 300ms;
 }
 
 footer p.copyright {
-    color: black;
     font-size: 0.5rem;
 }
 
-footer a:hover {
-    color:gray;
+footer td {
+    padding-top: 0.25rem;
+}
+
+footer tr > :first-child {
+    text-align: left;
+}
+
+footer tr > :last-child {
+    text-align: right;
 }
 
 /******** Section *********/
@@ -236,6 +253,12 @@ section > .section-content > .sideway-scrollable-container { /* Fix to use full 
 /******** When something is clickable, hovering will change the box shadow ********/
 .clickable:hover:not(#booster) {
     box-shadow: 0px 2px 20px rgba(0, 0, 0, 0.6);
+    cursor:     pointer;
+}
+
+img.clickable:hover:not(#booster) {
+    box-shadow: none;
+    filter:     drop-shadow(0px 2px 20px rgba(0, 0, 0, 0.6));
     cursor:     pointer;
 }
 
