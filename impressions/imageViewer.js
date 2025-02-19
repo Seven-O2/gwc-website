@@ -26,14 +26,14 @@ export const imageViewerController = () => {
     // Event that happens when the arrow was pressed
     const OnArrowPress = (event) => {
         if(event.key === "ArrowLeft" || event.key === "ArrowRight") {
-            for(let i = 0; i < imageViewer.children.length; i++) {
-                if(imageViewer.children[i].classList.contains("selected")) {
+            for(let i = 0; i < imagePreview.children.length; i++) {
+                if(imagePreview.children[i].classList.contains("selected")) {
                     if(i > 1 /* 1 because first is hint */ && event.key === "ArrowLeft") {
-                        setImageViewHead(imageViewer.children[i - 1]);
+                        setImageViewHead(imagePreview.children[i - 1]);
                         break;
                     }
-                    if(i < imageViewer.children.length - 1 && event.key === "ArrowRight") {
-                        setImageViewHead(imageViewer.children[i + 1]);
+                    if(i < imagePreview.children.length - 1 && event.key === "ArrowRight") {
+                        setImageViewHead(imagePreview.children[i + 1]);
                         break;
                     }
                 }
@@ -43,11 +43,11 @@ export const imageViewerController = () => {
 
     // Sets the "head image" of the ImageView and set the smaller image as selected
     const setImageViewHead = (replacementImage) => {
-        Array.from(imageViewer.getElementsByClassName("image-preview-container")[0].children)  // unselect all images
+        Array.from(imagePreview.children)  // unselect all images
             .forEach(c => c.classList.remove("selected"));
         replacementImage.classList.add("selected");                                         // select clicked image
-        imageViewer.children[0].src     = replacementImage.src;                             // set source of big image
-        imageViewer.children[0].onclick = () => window.open(replacementImage.src, "_blank") // on click of big image, open full quality
+        titleImage.src     = replacementImage.src;                             // set source of big image
+        titleImage.onclick = () => window.open(replacementImage.src, "_blank") // on click of big image, open full quality
     }
 
     // Finally close button => requires methods to be defined
@@ -68,17 +68,15 @@ export const imageViewerController = () => {
             .then((data) => {
                 const json = JSON.parse(data);
                 let first = null;
-                const imagesList = imageViewer.getElementsByClassName("image-preview-container")[0];
                 // Clean previous images
-                while(imagesList.children.length > 1) {
-                    imagesList.removeChild(imagesList.lastChild);
+                while(imagePreview.children.length > 1) {
+                    imagePreview.removeChild(imagePreview.lastChild);
                 }
-
                 // Iterate json and add all impressions
                 json.forEach(imageName => {
                     const image = document.createElement("img");
                     image.src = "/impressions/" + year + "/" + folder + "/" + imageName;
-                    imagesList.appendChild(image);
+                    imagePreview.appendChild(image);
                     image.onclick = () => setImageViewHead(image, imageViewer);
                     if(first === null) { first = image; }
                 });
