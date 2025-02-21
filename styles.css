@@ -2,8 +2,8 @@
 html {
     font-size:          24px;
     scroll-behavior:    smooth;
-    --primary-color:   #fde5cb;
-    --primary-color-weak: rgba(253,229,203,0.6);
+    --primary-color:   #feb500;
+    --primary-color-weak: #feb500E0;
     --default-spacing:   5vw;
     width:               100vw;
     overflow-x:          hidden;
@@ -59,7 +59,7 @@ a {
 }
 
 a:hover {
-    color:         darkgray;
+    color:         rgb(71, 71, 71);
     text-decoration: none;
 }
 
