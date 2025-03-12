@@ -63,3 +63,109 @@ export const loader = (parent) => {
         hide: () => { div.style.display = "none"; }
     }
 }
+
+export const createMapCard = (parent, title, subtitle, date, latitude, longitude, organizer, cancelled, logo) => {
+    const card = document.createElement("div");
+    card.classList.add("map-card");
+    card.classList.add("clickable");
+    if(cancelled === "true") {
+        card.classList.add("cancelled");
+    }
+    // if mouse up has same position as mouse down, open google maps
+    let mousePosition = undefined;
+    card.onmousedown = (e) => { mousePosition = {x: e.clientX, y: e.clientY}; }
+    card.onmouseup = (e) => {
+        if(mousePosition && mousePosition.x === e.clientX && mousePosition.y === e.clientY) {
+            window.open("https://maps.google.com/maps?hl=de&q=" + latitude + "," + longitude, "_blank");
+        }
+    }
+
+    parent.appendChild(card);
+
+    /**** Card data container ****/
+    const data = document.createElement("div");
+    card.appendChild(data);
+
+    // Logo
+    if(logo !== undefined) {
+        const logoElement = document.createElement("img");
+        logoElement.classList.add("event-logo");
+        logoElement.src = logo;
+        logoElement.alt = "Logo der Veranstaltung";
+        data.appendChild(logoElement);
+    }
+    
+    // Title
+    const titleElement = document.createElement("h2");
+    titleElement.innerHTML = title;
+    data.appendChild(titleElement);
+
+    // Subtitle
+    const subtitleElement = document.createElement("h4");
+    subtitleElement.innerHTML = subtitle;
+    data.appendChild(subtitleElement);
+
+    // Date
+    const dateElement = document.createElement("p");
+    dateElement.innerHTML = date;
+    data.appendChild(getIconWithText("/images/icons/calendar.svg", "Datum", dateElement))
+    
+    // Place
+    const placeElement = document.createElement("div");
+    const latElement = document.createElement("p");
+    latElement.classList.add("mono");
+    latElement.innerHTML = latitude + "° N";
+    placeElement.appendChild(latElement);
+
+    const lngElement = document.createElement("p");
+    lngElement.classList.add("mono");
+    lngElement.innerHTML = longitude + "° E";
+    placeElement.appendChild(lngElement);
+
+    data.appendChild(getIconWithText("/images/icons/map_pin.svg", "Ortschaft", placeElement))
+
+    // Organizer
+    if(organizer !== undefined) {
+        const organizerElement = document.createElement("p");
+        organizerElement.innerHTML = organizer;
+        data.appendChild(getIconWithText("/images/icons/user.svg", "Organisator", organizerElement));
+    }
+    
+    /**** Card map container -> Only if valid values ****/
+    if(latitude !== "-" && longitude !== "-") {
+        const mapDiv = document.createElement("div");
+        mapDiv.classList.add("map");
+        // Touchstart with only one finger => remind user to use multiple
+        mapDiv.addEventListener('touchstart', (event) => {
+            if (event.touches.length === 1) {
+                mapDiv.classList.add("use-two-fingers");
+            } else {
+                mapDiv.classList.remove("use-two-fingers");
+            }
+        });
+        mapDiv.addEventListener('touchend', _ => {
+            mapDiv.classList.remove("use-two-fingers");
+        });
+        card.appendChild(mapDiv);
+        const map = L.map(mapDiv, { dragging: !L.Browser.mobile }).setView([latitude, longitude], 7);
+        L.tileLayer('https://tiles1-bc7b4da77e971c12cb0e069bffcf2771.skobblermaps.com/TileService/tiles/2.0/01021113210/7/{z}/{x}/{y}.png@2x?traffic=false', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        }).addTo(map);
+        L.marker([latitude, longitude], {icon: L.icon({iconUrl: '/images/icons/marker_pin.svg', iconSize: [40, 40], iconAnchor: [20, 40]})}).addTo(map);
+
+        // Move marker to center between blurred part and right bounds (bottom bound on mobile)
+        let verticalCenter   = mapDiv.getBoundingClientRect().height / 2;
+        let horizontalCenter = mapDiv.getBoundingClientRect().width / 2;
+        if(window.matchMedia("(max-width: 1000px)").matches) {
+            // MOBILE
+            verticalCenter   = (mapDiv.getBoundingClientRect().height - data.getBoundingClientRect().height) / 2;
+            map.setView(map.containerPointToLatLng([horizontalCenter, verticalCenter]));
+        } else {
+            // DESKTOP
+            horizontalCenter = (mapDiv.getBoundingClientRect().width - data.getBoundingClientRect().width) / 2;
+            map.setView(map.containerPointToLatLng([horizontalCenter, verticalCenter]));
+        }
+    }
+
+    return card;
+}
