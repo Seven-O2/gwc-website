@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content="Offizielle Website des Geländewagenclubs Schweiz.">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
+    <link href="https://fonts.cdnfonts.com/css/impact" rel="stylesheet" type="text/css"> <!-- Impact Font -->
+    <link href="https://fonts.cdnfonts.com/css/jenkine" rel="stylesheet">                <!-- Jenkine Font (brushed )-->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">      <!-- leaflet -->
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="page-style.css">
+    <link rel="icon" type="image/x-icon" href="/images/icons/favicon.ico">
+    <title>Geländewagenclub Schweiz - GWC</title>
+  </head>
+  <body>
+    <!--######## NAVIGATION ########-->
+    <nav>
+      <div class="logo">
+        <img src="./images/icons/logo_bright.png" alt="logo">
+      </div>
+      <div id="menu-links">
+        <a href="#expectations">Erwartungen</a>
+        <a href="#requirements">Anforderungen</a>
+        <a href="#goals">Ziele</a>
+        <a href="#interested">Interessiert</a>
+      </div>
+      <img id="menu-button" src="./images/icons/hamburger.svg" alt="Menu icon" onclick="document.getElementById('menu-button').classList.toggle('enabled'); document.getElementById('menu-links').classList.toggle('enabled');">
+    </nav>
+    <!--######## TITLE ########-->
+    <div id="title-container" >
+      <div id="title-text-container">
+        <h1>Willkommen</h1>
+        <h1>beim GWC</h1>
+      </div>
+      <div id="title-floater">
+        <p>Lerne wie du sehen kannst, was dein Offroader kann</p>
+      </div>
+      <img id="title-image" src="/einsteiger/images/title/base.jpg" alt="Titelbild mit einem Proto welcher über ein Hinderniss fährt">
+      <img id="title-image-overlay" class="overlay" src="/einsteiger/images/title/overlay.png" alt="Überlagerung des Titelbildes">
+    </div>
+
+    <!--######## Was erwartet Dich? ########-->
+    <section id="expectations">
+      <h1 class="section-title">Was erwartet Dich?</h1>
+      <div class="section-content">
+        <p>Wenn für Dich Dreck und Schmutz keine Fremdwörter sind, und du die Grenzen deines Offroaders in schwerem Gelände testen willst: <b>Ein unvergessliches Offroad-Erlebnis.</b></p>
+        <p>Nach einer ausführlichen, theoretischen und praktischen Einweisung in Technik und Sicherheit, erkundest Du ein anspruchsvolles Gelände und optimierst Deine Fahrtechniken in Begleitung eines qualifizierten GWC - Offroader. </p>
+        <img class="full-width" src="/einsteiger/images/banner.png" alt="Banner"/>
+        <ul>
+          <li>Du lernst die <b>technischen Hilfsmittel</b> Deines Offroader kennen und sinnvoll einsetzen</li>
+          <li>Wir fahren mit Dir über Stock und Stein und zeigen Dir, <b>was alles in Deinem Auto steckt.</b></li>
+          <li>Wir fahren mit Dir Berg- und Gefällesdivecken ebenso wie Schrägfahrten. </li>
+          <li>Wir garantieren Dir einen spannenden und erlebnisreichen Tag, bei einer ausgewogenen Mischung zwischen Praxis und Theorie und Fahrspass in ungezwungener Atmosphäre.</li>
+          <li>Betreuung und Begleitung eines erfahrenen Offroad - Profi ist für uns selbstverständlich</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="requirements">
+      <h1 class="section-title">Was bringst Du mit?</h1>
+      <div class="section-content">
+        <table>
+          <tr>
+            <td>
+              <div class="icon-with-text">
+                <img src="/einsteiger/images/icons/id.png" alt="Ausweis"/>
+                <p>Führerausweis Kategorie B.</p>
+              </div>
+            </td>
+            <td>
+              <div class="icon-with-text">
+                <img src="/einsteiger/images/icons/person.png" alt="Hilfsperson"/>
+                <p>Hilfsperson als Beifahrer erlaubt (mind. 18 Jahre alt).</p>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div class="icon-with-text">
+                <img src="/einsteiger/images/icons/clothes.png" alt="Kleider"/>
+                <p>Geeignete wetterfeste Bekleidung, welche auch schmutzig werden darf.</p>
+              </div>
+            </td>
+            <td>
+              <div class="icon-with-text">
+                <img src="/einsteiger/images/icons/shoe.png" alt="Kleider"/>
+                <p>Geländetaugliches Schuhwerk, allenfalls Handschuhe.</p>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div class="icon-with-text">
+                <img src="/einsteiger/images/icons/rope.png" alt="Seil"/>
+                <p>Bergungsmaterial darf gerne mitgebracht und angewendet werden.</p>
+              </div>
+            </td>
+            <td>
+              <div class="icon-with-text">
+                <img src="/einsteiger/images/icons/offroad.png" alt="4x4 Fahrzeug"/>
+                <p>Eigener, immatrikulierter Geländewagen mit guter Geländetauglichkeit und ausreichender Bodenfreiheit. Die Marke spielt dabei keine Rolle.</p>
+              </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </section>
+
+    <section id="goals">
+      <h1 class="section-title">Kursziel</h1>
+      <div class="section-content">
+        <ul>
+          <li>Du bist in der Lage, Dein Offroader sicher im Geländeeinsatz zu bewegen. </li>
+          <li>Du wendest technische Hilfsmittel praktikabel / sinnvoll an? </li>
+          <li>Fahrspass in ungezwungener Atmosphäre</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="interested">
+      <h1 class="section-title">Interessiert?</h1>
+      <div class="section-content">
+        <p>Haben wir Dein Interesse geweckt? Bist Du bereit für Dein unvergessliches Offroad-Abenteuer? An folgenden Daten bieten wir Offroad-Kurse an.</p>
+        <div id="card-container"></div>
+        <p>Wir würden uns freuen, Dich an einem dieser Eventdaten herzlich begrüssen zu dürfen.</p>
+        <p>Hast Du Fragen oder Anregungen? Dann kannst Du uns gerne unter <a href="mailto:info@gwc-schweiz.ch">info@gwc-schweiz.ch</a> erreichen.</p>
+        <h4>Kosten</h4>
+        <ul>
+          <li>Kurskosten CHF 180.00 / Fahrer und Fahrzeug</li>
+          <li>Kurskosten CHF 280.00 / 2 Fahrer ein Fahrzeug</li>
+          <li>Nur Begleitperson: plus CHF 50.00</li>
+        </ul>
+        <h4>Versicherung / Haftung</h4>
+        <ul>
+          <li>Der GWC - Schweiz hat eine Betriebs-Haftpflichtversicherung  welche Schäden gegenüber Dritten abdeckt.</li>
+          <li>Fahrzeuge sind durch den Veranstalter / GWC - Schweiz nicht versichert.</li>
+        </ul>
+      </div>
+    </section>
+    <footer>
+      <img src="/images/icons/logo_dark.png">
+      <div class="socials">
+        <a href="https://www.instagram.com/gwc_schweiz_official/"><img class="clickable" src="images/icons/instagram.png"></a>
+        <a href="https://www.facebook.com/100063471430913"><img class="clickable" src="images/icons/facebook.png"></a>
+      </div>
+      <table>
+        <tr>
+          <td><a href="https://gwc-schweiz.ch">Hauptseite</a></td>
+          <td><a href="https://www.4x4fsg.ch">FSG</a></td>
+        </tr>
+        <tr>
+          <td><a href="https://www.pkwteile.ch">PKW Teile</a></td>
+          <td><a href="https://www.autoteilexxl.ch">Autoteile XXL</a></td>
+        </tr>
+        <tr>
+          <td><a href="https://www.euro4x4parts.com/en">euro4x4parts</a></td>
+          <td></td>
+        </tr>
+      </table>
+      <p class="copyright">&copy GWC-Schweiz, alle Rechte vorbehalten    -    <a href="./impressum/">Impressum</a></p>
+    </footer>
+  </body>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script> <!-- Leaflet -->
+  <script type="module">
+    import * as animations from "../js/animations.js" ;
+    import { createMapCard } from "../js/util.js";
+    import { createCourseDates } from "../js/dynamicBuilder.js";
+
+    animations.followScrollInverse([document.getElementById("title-text-container")]);
+    animations.flyInFromBottom([...document.getElementsByClassName("section-title")]);
+    // Title image follow mouse (if applicable)
+    if(window.screen.width > 1000) {
+        animations.followMouse([document.getElementById("title-image"), document.getElementById("title-image-overlay")]);
+    }
+    createCourseDates(document.getElementById("card-container"));
+  </script>
+</html>

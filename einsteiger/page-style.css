@@ -1,0 +1,22 @@
+/******** Was bringst Du mit ********/
+#requirements .section-content td {
+    width: 50%;
+}
+
+#requirements .section-content tr > :first-child {
+    padding-right: 2rem;
+}
+
+@media screen and (max-width: 1000px) { 
+    #requirements .section-content td {
+        width: auto;
+    }
+    #requirements .section-content tr {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+#card-container > * {
+    margin-bottom: 2rem;
+}
