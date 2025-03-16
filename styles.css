@@ -526,6 +526,7 @@ img.clickable:hover:not(#booster) {
 @media screen and (max-width: 1000px) {
     .map-card {
         flex-direction: column;
+        height: 100vw;
     }
 
     .map-card > *:first-child {
@@ -533,10 +534,6 @@ img.clickable:hover:not(#booster) {
         min-width: 100%;
         max-width: 100%;
         mask: linear-gradient(to bottom, black 0%, black 95%, transparent 100%)
-    }
-
-    .map-card > .map {
-        height: 100vw;
     }
 
     /* icon with text in map-card, all childs are appended inline */
