@@ -164,8 +164,8 @@ export const createMapCard = (parent, title, subtitle, date, latitude, longitude
             }
         });
         mapDiv.addEventListener('touchend',   _ => { mapDiv.classList.remove("use-two-fingers"); });
-        mapDiv.addEventListener('mousedown',  _ => { map.scrollWheelZoom.enable(); });
-        mapDiv.addEventListener('mouseleave', _ => { map.scrollWheelZoom.disable(); });
+        mapDiv.addEventListener('mousedown',  _ => { mapDiv.classList.add("zoomable"); map.scrollWheelZoom.enable(); });
+        mapDiv.addEventListener('mouseleave', _ => { mapDiv.classList.remove("zoomable"); map.scrollWheelZoom.disable(); });
     }
 
     return card;
