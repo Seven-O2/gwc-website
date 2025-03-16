@@ -135,6 +135,7 @@ export const createRankings = (parent) => {
                 }
                 const link = document.createElement("a");
                 link.href = "./documents/rankings/" + year + "/" + ranking;
+                link.target = "_blank"
                 link.classList.add("button-like");
                 link.innerHTML = name;
                 rankingContainer.appendChild(link);

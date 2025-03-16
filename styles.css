@@ -134,7 +134,7 @@ section::after /* Fine line after section */ {
 
 section > .section-title {
     margin-bottom:    1rem;
-    font-size:        10vw;
+    font-size:        8vw;
     transform-origin: 0% 0%;
     margin-left:      var(--default-spacing);
     margin-right:     var(--default-spacing);
@@ -256,7 +256,7 @@ section > .section-content > .full-width:not(#booster){
     bottom:    0;
     right:     1rem;
     position:  absolute;
-    color:     lightgray;
+    color:     var(--primary-color);
     animation: bounceHorizontal infinite 2s;
 }
 
@@ -572,7 +572,7 @@ img.clickable:hover:not(#booster) {
 
 /********* Site Naviation *********/
 nav {
-    position:       absolute;
+    position:       fixed;
     display:        flex;
     align-items:    center;
     width:          100vw;
@@ -583,6 +583,7 @@ nav {
     padding-top:    1rem;
     padding-bottom: 1rem;
     backdrop-filter: blur(17px);
+    background-color: #00000022;
 }
 
 nav > :first-child { margin-left:  var(--default-spacing); }
@@ -611,6 +612,7 @@ nav .logo > img {
     margin-top:      auto;
     margin-bottom:   auto;
     color:           var(--primary-color);
+    text-shadow:     0 0 10px white;
     font-size:       1.5vw;
     text-decoration: none;
     transition:      0.3s;

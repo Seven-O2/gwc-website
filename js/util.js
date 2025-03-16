@@ -135,19 +135,8 @@ export const createMapCard = (parent, title, subtitle, date, latitude, longitude
     if(latitude !== "-" && longitude !== "-") {
         const mapDiv = document.createElement("div");
         mapDiv.classList.add("map");
-        // Touchstart with only one finger => remind user to use multiple
-        mapDiv.addEventListener('touchstart', (event) => {
-            if (event.touches.length === 1) {
-                mapDiv.classList.add("use-two-fingers");
-            } else {
-                mapDiv.classList.remove("use-two-fingers");
-            }
-        });
-        mapDiv.addEventListener('touchend', _ => {
-            mapDiv.classList.remove("use-two-fingers");
-        });
         card.appendChild(mapDiv);
-        const map = L.map(mapDiv, { dragging: !L.Browser.mobile }).setView([latitude, longitude], 7);
+        const map = L.map(mapDiv, { dragging: !L.Browser.mobile, scrollWheelZoom: L.Browser.mobile }).setView([latitude, longitude], 7);
         L.tileLayer('https://tiles1-bc7b4da77e971c12cb0e069bffcf2771.skobblermaps.com/TileService/tiles/2.0/01021113210/7/{z}/{x}/{y}.png@2x?traffic=false', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
         }).addTo(map);
@@ -165,6 +154,18 @@ export const createMapCard = (parent, title, subtitle, date, latitude, longitude
             horizontalCenter = (mapDiv.getBoundingClientRect().width - data.getBoundingClientRect().width) / 2;
             map.setView(map.containerPointToLatLng([horizontalCenter, verticalCenter]));
         }
+
+        // Touchstart with only one finger => remind user to use multiple
+        mapDiv.addEventListener('touchstart', (event) => {
+            if (event.touches.length === 1) {
+                mapDiv.classList.add("use-two-fingers");
+            } else {
+                mapDiv.classList.remove("use-two-fingers");
+            }
+        });
+        mapDiv.addEventListener('touchend',   _ => { mapDiv.classList.remove("use-two-fingers"); });
+        mapDiv.addEventListener('mousedown',  _ => { map.scrollWheelZoom.enable(); });
+        mapDiv.addEventListener('mouseleave', _ => { map.scrollWheelZoom.disable(); });
     }
 
     return card;
