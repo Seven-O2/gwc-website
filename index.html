@@ -175,7 +175,8 @@
     animations.flyInFromBottom([...document.getElementsByClassName("section-title")]);
     animations.flyInFromBottom([...document.getElementsByClassName("sideway-scrollable-container")]);
     animations.mouseDragSideways([...document.getElementsByClassName("sideway-scrollable-container")]);
-
+    animations.dynamicNav(document.getElementsByTagName("nav")[0]);
+    
     // Title image follow mouse (if applicable)
     if(window.screen.width > 1000) {
         animations.followMouse([document.getElementById("title-image"), document.getElementById("title-image-overlay")]);

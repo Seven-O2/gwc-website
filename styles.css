@@ -580,7 +580,8 @@ nav {
     padding-top:    1rem;
     padding-bottom: 1rem;
     backdrop-filter: blur(17px);
-    background-color: #00000022;
+    background-color: #00000070;
+    transition:     1s;
 }
 
 nav > :first-child { margin-left:  var(--default-spacing); }
@@ -609,7 +610,6 @@ nav .logo > img {
     margin-top:      auto;
     margin-bottom:   auto;
     color:           var(--primary-color);
-    text-shadow:     0 0 10px white;
     font-size:       1.5vw;
     text-decoration: none;
     transition:      0.3s;

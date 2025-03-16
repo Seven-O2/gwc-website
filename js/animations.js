@@ -83,3 +83,16 @@ export const mouseDragSideways = (elements) => {
         });
     });
 }
+
+// Adds dynamic scroll property to navigation: Scroll down (more than 100) moves nav up (off screen)
+export const dynamicNav = (navigation) => {
+    let previousPosition = 0;
+    let diff = 0;
+    addEventListener("scroll", _ => {
+        const delta = window.pageYOffset - previousPosition;
+        diff = delta > 0 ? diff + delta : 0;
+        navigation.style.transform = diff > 300 ? "translateY(-10rem)" : "translateY(0)";
+        previousPosition = window.pageYOffset
+        console.log(diff)
+    })
+}

@@ -169,6 +169,8 @@
 
     animations.followScrollInverse([document.getElementById("title-text-container")]);
     animations.flyInFromBottom([...document.getElementsByClassName("section-title")]);
+    animations.dynamicNav(document.getElementsByTagName("nav")[0]);
+    
     // Title image follow mouse (if applicable)
     if(window.screen.width > 1000) {
         animations.followMouse([document.getElementById("title-image"), document.getElementById("title-image-overlay")]);
